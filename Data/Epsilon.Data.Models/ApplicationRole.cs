@@ -1,12 +1,12 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
+using System;
+
+using Epsilon.Data.Common.Models;
+
+using Microsoft.AspNetCore.Identity;
+
 namespace Epsilon.Data.Models
 {
-    using System;
-
-    using Epsilon.Data.Common.Models;
-
-    using Microsoft.AspNetCore.Identity;
-
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {
         public ApplicationRole()
@@ -19,6 +19,8 @@ namespace Epsilon.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
         }
+
+
 
         public DateTime CreatedOn { get; set; }
 

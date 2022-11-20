@@ -1,7 +1,7 @@
-﻿namespace Epsilon.Data.Common.Models
-{
-    using System;
+﻿using System;
 
+namespace Epsilon.Data.Common.Models
+{
     public interface IDeletableEntity
     {
         bool IsDeleted { get; set; }

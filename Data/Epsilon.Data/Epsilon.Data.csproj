@@ -44,4 +44,8 @@
     <ProjectReference Include="..\Epsilon.Data.Models\Epsilon.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

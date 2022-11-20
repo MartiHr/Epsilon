@@ -1,9 +1,9 @@
-﻿namespace Epsilon.Data.Common.Repositories
+﻿using System.Linq;
+
+using Epsilon.Data.Common.Models;
+
+namespace Epsilon.Data.Common.Repositories
 {
-    using System.Linq;
-
-    using Epsilon.Data.Common.Models;
-
     public interface IDeletableEntityRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IDeletableEntity
     {

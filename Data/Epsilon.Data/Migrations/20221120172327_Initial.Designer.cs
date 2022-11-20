@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Epsilon.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220607060115_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221120172327_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,21 @@ namespace Epsilon.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ComputerPart", b =>
+                {
+                    b.Property<int>("ComputersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PartsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ComputersId", "PartsId");
+
+                    b.HasIndex("PartsId");
+
+                    b.ToTable("ComputerPart");
+                });
 
             modelBuilder.Entity("Epsilon.Data.Models.ApplicationRole", b =>
                 {
@@ -144,13 +159,57 @@ namespace Epsilon.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Epsilon.Data.Models.Setting", b =>
+            modelBuilder.Entity("Epsilon.Data.Models.Computer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ManufacturerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("money");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ManufacturerId");
+
+                    b.ToTable("Computers");
+                });
+
+            modelBuilder.Entity("Epsilon.Data.Models.Manufacturer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -167,14 +226,52 @@ namespace Epsilon.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Value")
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Manufacturers");
+                });
+
+            modelBuilder.Entity("Epsilon.Data.Models.Part", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ManufacturerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Settings");
+                    b.HasIndex("ManufacturerId");
+
+                    b.ToTable("Parts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -283,6 +380,39 @@ namespace Epsilon.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ComputerPart", b =>
+                {
+                    b.HasOne("Epsilon.Data.Models.Computer", null)
+                        .WithMany()
+                        .HasForeignKey("ComputersId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Epsilon.Data.Models.Part", null)
+                        .WithMany()
+                        .HasForeignKey("PartsId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Epsilon.Data.Models.Computer", b =>
+                {
+                    b.HasOne("Epsilon.Data.Models.Manufacturer", "Manufacturer")
+                        .WithMany("Computers")
+                        .HasForeignKey("ManufacturerId");
+
+                    b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("Epsilon.Data.Models.Part", b =>
+                {
+                    b.HasOne("Epsilon.Data.Models.Manufacturer", "Manufacturer")
+                        .WithMany("Parts")
+                        .HasForeignKey("ManufacturerId");
+
+                    b.Navigation("Manufacturer");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Epsilon.Data.Models.ApplicationRole", null)
@@ -341,6 +471,13 @@ namespace Epsilon.Data.Migrations
                     b.Navigation("Logins");
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Epsilon.Data.Models.Manufacturer", b =>
+                {
+                    b.Navigation("Computers");
+
+                    b.Navigation("Parts");
                 });
 #pragma warning restore 612, 618
         }

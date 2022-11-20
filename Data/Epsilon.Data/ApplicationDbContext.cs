@@ -1,17 +1,17 @@
-﻿namespace Epsilon.Data
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Epsilon.Data.Common.Models;
+using Epsilon.Data.Models;
+
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
+namespace Epsilon.Data
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
-    using System.Threading;
-    using System.Threading.Tasks;
-
-    using Epsilon.Data.Common.Models;
-    using Epsilon.Data.Models;
-
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
@@ -23,6 +23,12 @@
             : base(options)
         {
         }
+
+        public DbSet<Computer> Computers { get; set; }
+
+        public DbSet<Part> Parts { get; set; }
+
+        public DbSet<Manufacturer> Manufacturers { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
