@@ -1,26 +1,23 @@
-﻿namespace Sandbox
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+
+using CommandLine;
+using Epsilon.Data;
+using Epsilon.Data.Common;
+using Epsilon.Data.Common.Repositories;
+using Epsilon.Data.Models;
+using Epsilon.Data.Repositories;
+using Epsilon.Data.Seeding;
+using Epsilon.Services.Messaging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
+namespace Sandbox
 {
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Threading.Tasks;
-
-    using Epsilon.Data;
-    using Epsilon.Data.Common;
-    using Epsilon.Data.Common.Repositories;
-    using Epsilon.Data.Models;
-    using Epsilon.Data.Repositories;
-    using Epsilon.Data.Seeding;
-    using Epsilon.Services.Data;
-    using Epsilon.Services.Messaging;
-
-    using CommandLine;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-
     public static class Program
     {
         public static int Main(string[] args)

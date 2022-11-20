@@ -1,26 +1,24 @@
-﻿namespace Epsilon.Web
+﻿using System.Reflection;
+
+using Epsilon.Data;
+using Epsilon.Data.Common;
+using Epsilon.Data.Common.Repositories;
+using Epsilon.Data.Models;
+using Epsilon.Data.Repositories;
+using Epsilon.Data.Seeding;
+using Epsilon.Services.Mapping;
+using Epsilon.Services.Messaging;
+using Epsilon.Web.ViewModels;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace Epsilon.Web
 {
-    using System.Reflection;
-
-    using Epsilon.Data;
-    using Epsilon.Data.Common;
-    using Epsilon.Data.Common.Repositories;
-    using Epsilon.Data.Models;
-    using Epsilon.Data.Repositories;
-    using Epsilon.Data.Seeding;
-    using Epsilon.Services.Data;
-    using Epsilon.Services.Mapping;
-    using Epsilon.Services.Messaging;
-    using Epsilon.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-
     public class Program
     {
         public static void Main(string[] args)
@@ -64,7 +62,6 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
         }
 
         private static void Configure(WebApplication app)
@@ -73,7 +70,7 @@
             using (var serviceScope = app.Services.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.Migrate();
+                //dbContext.Database.Migrate();
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 

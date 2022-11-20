@@ -40,4 +40,8 @@
     <ProjectReference Include="..\Epsilon.Web.Infrastructure\Epsilon.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\Epsilon.Web.ViewModels\Epsilon.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Views\Dashboard\" />
+  </ItemGroup>
 </Project>
