@@ -1,11 +1,11 @@
-﻿namespace Epsilon.Web.Controllers
+﻿using System.Diagnostics;
+
+using Epsilon.Web.ViewModels;
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace Epsilon.Web.Controllers
 {
-    using System.Diagnostics;
-
-    using Epsilon.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Mvc;
-
     public class HomeController : BaseController
     {
         public IActionResult Index()

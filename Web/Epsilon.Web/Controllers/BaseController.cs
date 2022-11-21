@@ -1,7 +1,7 @@
-﻿namespace Epsilon.Web.Controllers
-{
-    using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
+namespace Epsilon.Web.Controllers
+{
     public class BaseController : Controller
     {
     }
