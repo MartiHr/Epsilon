@@ -21,7 +21,6 @@ namespace Epsilon.Data.Models
         }
 
 
-
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }

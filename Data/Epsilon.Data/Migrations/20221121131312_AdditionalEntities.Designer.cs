@@ -4,6 +4,7 @@ using Epsilon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Epsilon.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121131312_AdditionalEntities")]
+    partial class AdditionalEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,6 +167,9 @@ namespace Epsilon.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -182,9 +187,11 @@ namespace Epsilon.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Computer", b =>
@@ -236,38 +243,6 @@ namespace Epsilon.Data.Migrations
                     b.ToTable("Computers");
                 });
 
-            modelBuilder.Entity("Epsilon.Data.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Customers");
-                });
-
             modelBuilder.Entity("Epsilon.Data.Models.Manufacturer", b =>
                 {
                     b.Property<int>("Id")
@@ -299,38 +274,6 @@ namespace Epsilon.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Manufacturers");
-                });
-
-            modelBuilder.Entity("Epsilon.Data.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Part", b =>
@@ -495,10 +438,17 @@ namespace Epsilon.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Epsilon.Data.Models.Category", b =>
+                {
+                    b.HasOne("Epsilon.Data.Models.Category", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("CategoryId");
+                });
+
             modelBuilder.Entity("Epsilon.Data.Models.Computer", b =>
                 {
                     b.HasOne("Epsilon.Data.Models.Category", "Category")
-                        .WithMany("Computers")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -512,26 +462,6 @@ namespace Epsilon.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Manufacturer");
-                });
-
-            modelBuilder.Entity("Epsilon.Data.Models.Customer", b =>
-                {
-                    b.HasOne("Epsilon.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Epsilon.Data.Models.Order", b =>
-                {
-                    b.HasOne("Epsilon.Data.Models.Customer", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Part", b =>
@@ -607,12 +537,7 @@ namespace Epsilon.Data.Migrations
 
             modelBuilder.Entity("Epsilon.Data.Models.Category", b =>
                 {
-                    b.Navigation("Computers");
-                });
-
-            modelBuilder.Entity("Epsilon.Data.Models.Customer", b =>
-                {
-                    b.Navigation("Orders");
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Manufacturer", b =>

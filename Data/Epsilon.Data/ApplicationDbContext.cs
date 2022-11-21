@@ -28,7 +28,13 @@ namespace Epsilon.Data
 
         public DbSet<Part> Parts { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         public DbSet<Manufacturer> Manufacturers { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
