@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using Epsilon.Data.Models;
+using Epsilon.Web.ViewModels.ApplicationUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace Epsilon.Web.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("All", "Books");
+                return RedirectToAction("Index", "Home");
             }
 
             var model = new RegisterViewModel();
@@ -70,7 +71,7 @@ namespace Epsilon.Web.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("All", "Books");
+                return RedirectToAction("Index", "Home");
             }
 
             var model = new LoginViewModel();
@@ -96,7 +97,7 @@ namespace Epsilon.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("All", "Books");
+                    return RedirectToAction("Index", "Home");
                 }
             }
 

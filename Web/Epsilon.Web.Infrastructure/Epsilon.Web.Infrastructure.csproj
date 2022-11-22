@@ -18,4 +18,6 @@
     </PackageReference>
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties _1_1_4_1_1_4stylecop_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
