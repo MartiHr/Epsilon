@@ -5,8 +5,13 @@ using Epsilon.Data.Common.Models;
 
 namespace Epsilon.Data.Models
 {
-    public class Customer : BaseDeletableModel<int>
+    public class Customer : BaseDeletableModel<string>
     {
+        public Customer()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
