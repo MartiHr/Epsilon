@@ -4,9 +4,56 @@
     ViewData["Title"] = "Register";
 }
 
-<h1 class="text-center">@ViewData["Title"]</h1>
+<div class="d-flex justify-content-center align-items-center mt-4">
+    <div class="container">
+        <div class="row d-flex justify-content-center pt-lg-4">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="border border-3 border-primary"></div>
+                <div class="card bg-white shadow-lg">
+                    <div class="card-body p-5">
+                        <form id="account" id="registerForm" method="post" class="mb-3 mt-md-4 ">
+                            <h2 class="fw-bold mb-2 text-uppercase ">@ViewData["Title"]</h2>
+                            <p class=" mb-5">Please enter your username, email and password!</p>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="mb-3">
+                                <label asp-for="@Model.UserName" class="form-label"></label>
+                                <input asp-for="@Model.UserName" class="form-control" autocomplete="username" aria-required="true" />
+                                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="@Model.Email" class="form-label"></label>
+                                <input asp-for="@Model.Email" class="form-control" autocomplete="username" aria-required="true" />
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-4">
+                                <label asp-for="@Model.Password" class="form-label"></label>
+                                <input asp-for="@Model.Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" />
+                                <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                            </div>
+                            <div class="mb-4">
+                                <label asp-for="@Model.ConfirmPassword" class="form-label"></label>
+                                <input asp-for="@Model.ConfirmPassword" type="password" class="form-control" autocomplete="current-password" aria-required="true" />
+                                <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="d-grid">
+                                <button id="register-submit" type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </form>
+                        <div>
+                            <p class="mb-0  text-center">
+                                Already have an account? 
+                                <a class="nav-link text-primary fw-bold" asp-controller="ApplicationUser" asp-action="Login">Sign In</a>
+                            </p>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+@*
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <form id="registerForm" method="post">
@@ -37,4 +84,4 @@
             </div>
         </form>
     </div>
-</div>
+</div>*@
