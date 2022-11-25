@@ -10,6 +10,11 @@ namespace Epsilon.Web.Controllers
     {
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+
+            }
+
             return this.View();
         }
 
