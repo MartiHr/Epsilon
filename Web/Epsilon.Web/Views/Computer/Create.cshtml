@@ -1,1 +1,44 @@
-﻿
+﻿@model ComputerCreateInputModel
+
+@{
+    ViewData["Title"] = "Create Computer";
+    // TODO: Delete unused code from file
+}
+
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>@ViewData["Title"]</h3>
+                    <p>Fill in the data below.</p>
+                    <form id="account" id="create-computer-form" method="post" class="mb-3 mt-md-4 ">
+                        <div class="mb-3">
+                            <label asp-for="@Model.Name" class="form-label"></label>
+                            <input asp-for="@Model.Name" class="form-control" aria-required="true" />
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.Model" class="form-label"></label>
+                            <input asp-for="@Model.Model" class="form-control" aria-required="true" />
+                            <span asp-validation-for="@Model.Model" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.Price" class="form-label"></label>
+                            <input asp-for="@Model.Price" type="number" class="form-control" aria-required="true" />
+                            <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Description" class="form-label mt-4"></label>
+                            <textarea asp-for="@Model.Description" class="form-control" id="description-textarea" rows="3"></textarea>
+                            <span asp-validation-for="@Model.Description" class="text-danger"></span >
+                        </div>
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

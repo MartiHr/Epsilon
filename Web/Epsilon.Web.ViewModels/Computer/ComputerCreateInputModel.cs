@@ -1,4 +1,8 @@
-﻿namespace Epsilon.Web.ViewModels.Computer
+﻿using Epsilon.Web.ViewModels.Category;
+using Epsilon.Web.ViewModels.Manufacturer;
+using System.Collections.Generic;
+
+namespace Epsilon.Web.ViewModels.Computer
 {
     public class ComputerCreateInputModel
     {
@@ -9,17 +13,13 @@
 
         public decimal Price { get; set; }
 
-        public string Description { get; set; } 
+        public string Description { get; set; }
 
-        //public int ManufacturerId { get; set; }
+        public IEnumerable<CategoryDropdownView> Categories { get; set; } = new List<CategoryDropdownView>();
 
-        //public int CategoryId { get; set; }
+        public IEnumerable<ManufacturerDropdownView> Manufacturers { get; set; } = new List<ManufacturerDropdownView>();
 
-        // TODO: implement the things below
-        // public Category Category { get; set; }
-
-        // public Manufacturer Manufacturer { get; set; }
-
+        // TODO: implement parts adding view
         // public ICollection<Part> Parts { get; set; } = new HashSet<Part>();
     }
 }
