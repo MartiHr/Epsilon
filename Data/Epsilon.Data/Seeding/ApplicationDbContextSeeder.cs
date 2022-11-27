@@ -26,6 +26,7 @@ namespace Epsilon.Data.Seeding
             var seeders = new List<ISeeder>
                           {
                               new RolesSeeder(),
+                              new CategorySeeder(),
                           };
 
             foreach (var seeder in seeders)
