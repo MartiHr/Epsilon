@@ -16,11 +16,11 @@ namespace Epsilon.Data.Models
 
         public string Description { get; set; }
 
-        public int ManufacturerId { get; set; }
-
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
+
+        public int ManufacturerId { get; set; }
 
         public Manufacturer Manufacturer { get; set; }
 
