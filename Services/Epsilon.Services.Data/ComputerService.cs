@@ -1,6 +1,7 @@
 ﻿using Epsilon.Data.Common.Repositories;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
+using Epsilon.Web.ViewModels.Computer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,9 @@ namespace Epsilon.Services.Data
             computerRepository = _computerRepository;
         }
 
-
+        public Task CreateAsync(ComputerViewModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

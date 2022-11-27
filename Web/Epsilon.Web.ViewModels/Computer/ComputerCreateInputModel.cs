@@ -1,9 +1,8 @@
 ﻿namespace Epsilon.Web.ViewModels.Computer
 {
-    public class ComputerViewModel
+    public class ComputerCreateInputModel
     {
         // TODO: add attributes and finish
-        // TODO: fix
         public string Name { get; set; }
 
         public string Model { get; set; }

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Epsilon.Data.Common\Epsilon.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\Epsilon.Data.Models\Epsilon.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\Epsilon.Web.ViewModels\Epsilon.Web.ViewModels.csproj" />
     <ProjectReference Include="..\Epsilon.Services.Mapping\Epsilon.Services.Mapping.csproj" />
   </ItemGroup>
 

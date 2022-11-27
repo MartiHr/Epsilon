@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Epsilon.Web.Controllers
 {
     [Authorize]
-    public class ApplicationUserController : Controller
+    public class ApplicationUserController : BaseController
     {
         private readonly UserManager<ApplicationUser> userManager;
 
