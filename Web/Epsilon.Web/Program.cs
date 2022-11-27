@@ -66,6 +66,7 @@ namespace Epsilon.Web
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IComputerService, ComputerService>();
         }
 
         private static void Configure(WebApplication app)
