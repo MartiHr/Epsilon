@@ -7,7 +7,7 @@ namespace Epsilon.Data.Models
 {
     public class Customer : BaseDeletableModel<string>
     {
-        // TODO: If needed add customer specific properties
+        // TODO: Add customer specific properties
         public Customer()
         {
             Id = Guid.NewGuid().ToString();

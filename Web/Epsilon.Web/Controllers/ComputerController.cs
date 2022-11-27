@@ -1,4 +1,5 @@
 ﻿using Epsilon.Services.Data.Contracts;
+using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.Computer;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -37,7 +38,7 @@ namespace Epsilon.Web.Controllers
 
             try
             {
-                await computerService.CreateAsync(model);
+                await computerService.CreateAsync(model, User.Id());
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
@@ -45,7 +46,6 @@ namespace Epsilon.Web.Controllers
 
                 throw;
             }
-            
         }
     }
 }

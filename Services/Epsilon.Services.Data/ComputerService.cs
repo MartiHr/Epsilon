@@ -19,9 +19,12 @@ namespace Epsilon.Services.Data
             computerRepository = _computerRepository;
         }
 
-        public Task CreateAsync(ComputerViewModel model)
+        public async Task CreateAsync(ComputerCreateInputModel model, string ownerId)
         {
-            throw new NotImplementedException();
+            var computer = new Computer()
+            {
+
+            };
         }
     }
 }
