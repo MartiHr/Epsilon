@@ -10,6 +10,6 @@ namespace Epsilon.Web.ViewModels.ApplicationUser
 
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = null!;
+        public string Password { get; set; } = null!;   
     }
 }

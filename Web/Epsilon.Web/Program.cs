@@ -6,6 +6,8 @@ using Epsilon.Data.Common.Repositories;
 using Epsilon.Data.Models;
 using Epsilon.Data.Repositories;
 using Epsilon.Data.Seeding;
+using Epsilon.Services.Data;
+using Epsilon.Services.Data.Contracts;
 using Epsilon.Services.Mapping;
 using Epsilon.Services.Messaging;
 using Epsilon.Web.ViewModels;
@@ -62,6 +64,8 @@ namespace Epsilon.Web
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
+            services.AddTransient<ICustomerService, CustomerService>();
         }
 
         private static void Configure(WebApplication app)

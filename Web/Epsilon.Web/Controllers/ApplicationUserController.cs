@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 
 using Epsilon.Data.Models;
+using Epsilon.Services.Data.Contracts;
+using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.ApplicationUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +17,13 @@ namespace Epsilon.Web.Controllers
 
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public ApplicationUserController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager)
+        private readonly ICustomerService customerService;
+
+        public ApplicationUserController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager, ICustomerService _customerService)
         {
             userManager = _userManager;
             signInManager = _signInManager;
+            customerService = _customerService;
         }
 
         [HttpGet]
@@ -54,6 +59,7 @@ namespace Epsilon.Web.Controllers
 
             if (result.Succeeded)
             {
+                await customerService.CreateAsync(user.Id);
                 return RedirectToAction(nameof(Login));
             }
 
