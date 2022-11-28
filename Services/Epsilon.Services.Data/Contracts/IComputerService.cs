@@ -6,6 +6,6 @@ namespace Epsilon.Services.Data.Contracts
     public interface IComputerService
     {
         // TODO: implement
-        Task CreateAsync(ComputerCreateInputModel model, string ownerId);
+        Task CreateAsync(ComputerCreateInputModel model, string creatorId);
     }
 }

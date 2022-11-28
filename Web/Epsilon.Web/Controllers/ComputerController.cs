@@ -1,11 +1,12 @@
-﻿using Epsilon.Services.Data.Contracts;
+﻿using System;
+using System.Threading.Tasks;
+
+using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Computer;
 using Epsilon.Web.ViewModels.Manufacturer;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace Epsilon.Web.Controllers
 {
@@ -61,15 +62,20 @@ namespace Epsilon.Web.Controllers
             {
                 var creatorId = await editorService.GetEditorIdAsync(User.Id());
 
-                await computerService.CreateAsync(model, );
+                await computerService.CreateAsync(model, creatorId);
 
                 // return RedirectToAction(nameof(All));
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)
             {
+                // TODO: add toastr
+                ModelState.AddModelError(string.Empty, "Unexpected error");
 
-                throw;
+                model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
+                model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+
+                return View(model);
             }
         }
     }

@@ -12,7 +12,7 @@
                 <div class="form-items">
                     <h3>@ViewData["Title"]</h3>
                     <p>Fill in the data below.</p>
-                    <form id="account" id="create-computer-form" method="post" class="mb-3 mt-md-4 ">
+                    <form asp-action="Create" id="create-computer-form" method="post" class="mb-3 mt-md-4 ">
                         <div class="mb-3">
                             <label asp-for="@Model.Name" class="form-label"></label>
                             <input asp-for="@Model.Name" class="form-control" aria-required="true" />
@@ -51,8 +51,8 @@
                                 }
                             </select>
                         </div>
-                        <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="btn btn-primary">Create</button>
+                        <div class="mb-3">
+                            <input class="btn btn-primary" type="submit" value="Create" />
                         </div>
                     </form>
                 </div>

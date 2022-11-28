@@ -4,6 +4,6 @@ namespace Epsilon.Services.Data.Contracts
 {
     public interface IEditorService
     {
-        Task GetEditorIdAsync(string userId);
+        Task<string> GetEditorIdAsync(string userId);
     }
 }

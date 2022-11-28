@@ -16,18 +16,21 @@ namespace Epsilon.Services.Data
             computerRepository = _computerRepository;
         }
 
-        public async Task CreateAsync(ComputerCreateInputModel model, string ownerId)
+        public async Task CreateAsync(ComputerCreateInputModel model, string creatorId)
         {
-
-
             var computer = new Computer()
             {
                 Name = model.Name,
                 Model = model.Model,
                 Price = model.Price,
                 Description = model.Description,
-                CreatorId = await 
+                CategoryId = model.CategoryId,
+                ManufacturerId = model.ManufacturerId,
+                CreatorId = creatorId,
             };
+
+            await computerRepository.AddAsync(computer);
+            await computerRepository.SaveChangesAsync();
         }
     }
 }
