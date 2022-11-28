@@ -47,22 +47,22 @@ namespace Epsilon.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ComputerCreateInputModel model)
+        public async Task<IActionResult> Create(ComputerCreateInputModel inputModel)
         {
             // TODO: implement error handling (catch functionality)
             if (!this.ModelState.IsValid)
             {
-                model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
-                model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+                inputModel.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
+                inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
 
-                return this.View(model);
+                return this.View(inputModel);
             }
 
             try
             {
                 var creatorId = await editorService.GetEditorIdAsync(User.Id());
 
-                await computerService.CreateAsync(model, creatorId);
+                await computerService.CreateAsync(inputModel, creatorId);
 
                 // return RedirectToAction(nameof(All));
                 return RedirectToAction("Index", "Home");
@@ -72,10 +72,10 @@ namespace Epsilon.Web.Controllers
                 // TODO: add toastr
                 ModelState.AddModelError(string.Empty, "Unexpected error");
 
-                model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
-                model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+                inputModel.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
+                inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
 
-                return View(model);
+                return View(inputModel);
             }
         }
     }

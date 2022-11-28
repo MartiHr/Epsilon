@@ -16,6 +16,17 @@ namespace Epsilon.Services.Data
             editorRepository = _editorRepository;
         }
 
+        public async Task CreateAsync(string applicationUserId)
+        {
+            var editor = new Editor()
+            {
+                ApplicationUserId = applicationUserId,
+            };
+
+            await editorRepository.AddAsync(editor);
+            await editorRepository.SaveChangesAsync();
+        }
+
         public async Task<string> GetEditorIdAsync(string userId)
         {
             return await editorRepository

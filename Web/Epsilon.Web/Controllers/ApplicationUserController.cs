@@ -16,12 +16,18 @@ namespace Epsilon.Web.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ICustomerService customerService;
+        private readonly IEditorService editorService;
 
-        public ApplicationUserController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager, ICustomerService _customerService)
+        public ApplicationUserController
+            (UserManager<ApplicationUser> _userManager,
+            SignInManager<ApplicationUser> _signInManager,
+            ICustomerService _customerService,
+            IEditorService _editorService)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             customerService = _customerService;
+            editorService = _editorService;
         }
 
         [HttpGet]
@@ -58,6 +64,9 @@ namespace Epsilon.Web.Controllers
             if (result.Succeeded)
             {
                 await customerService.CreateAsync(user.Id);
+
+                // TODO: move creation of editor to the correct place
+                await editorService.CreateAsync(user.Id);
                 return RedirectToAction(nameof(Login));
             }
 
