@@ -14,12 +14,18 @@ namespace Epsilon.Web.Controllers
         private readonly IComputerService computerService;
         private readonly ICategoryService categoriesService;
         private readonly IManufacturerService manufacturerService;
+        private readonly IEditorService editorService;
 
-        public ComputerController(IComputerService _computerService, ICategoryService _categoriesService, IManufacturerService _manufacturerService)
+        public ComputerController
+            (IComputerService _computerService,
+            ICategoryService _categoriesService,
+            IManufacturerService _manufacturerService,
+            IEditorService _editorService)
         {
             computerService = _computerService;
             categoriesService = _categoriesService;
             manufacturerService = _manufacturerService;
+            editorService = _editorService;
         }
 
         public IActionResult All()
@@ -53,7 +59,9 @@ namespace Epsilon.Web.Controllers
 
             try
             {
-                await computerService.CreateAsync(model, User.Id());
+                var creatorId = await editorService.GetEditorIdAsync(User.Id());
+
+                await computerService.CreateAsync(model, );
 
                 // return RedirectToAction(nameof(All));
                 return RedirectToAction("Index", "Home");

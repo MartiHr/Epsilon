@@ -26,7 +26,7 @@ namespace Epsilon.Services.Data
                 Model = model.Model,
                 Price = model.Price,
                 Description = model.Description,
-                //CreatorId = 
+                CreatorId = await 
             };
         }
     }
