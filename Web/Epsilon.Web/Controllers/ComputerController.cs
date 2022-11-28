@@ -1,5 +1,6 @@
 ﻿using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
+using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Computer;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +12,12 @@ namespace Epsilon.Web.Controllers
     {
         private readonly IComputerService computerService;
 
-        public ComputerController(IComputerService _computerService)
+        private readonly ICategoryService categoriesService;
+
+        public ComputerController(IComputerService _computerService, ICategoryService _categoriesService)
         {
             computerService = _computerService;
+            categoriesService = _categoriesService;
         }
 
         public IActionResult All()
@@ -22,9 +26,14 @@ namespace Epsilon.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var model = new ComputerCreateInputModel()
+            {
+                Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>(),
+            };
+
+            return View(model);
         }
 
         [HttpPost]
