@@ -14,9 +14,7 @@ namespace Epsilon.Web.Controllers
     public class ApplicationUserController : BaseController
     {
         private readonly UserManager<ApplicationUser> userManager;
-
         private readonly SignInManager<ApplicationUser> signInManager;
-
         private readonly ICustomerService customerService;
 
         public ApplicationUserController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager, ICustomerService _customerService)

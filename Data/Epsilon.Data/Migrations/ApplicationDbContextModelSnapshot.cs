@@ -270,6 +270,35 @@ namespace Epsilon.Data.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Epsilon.Data.Models.Editor", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Editor");
+                });
+
             modelBuilder.Entity("Epsilon.Data.Models.Manufacturer", b =>
                 {
                     b.Property<int>("Id")
@@ -502,8 +531,8 @@ namespace Epsilon.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Epsilon.Data.Models.ApplicationUser", "Creator")
-                        .WithMany()
+                    b.HasOne("Epsilon.Data.Models.Editor", "Creator")
+                        .WithMany("CreatedComputers")
                         .HasForeignKey("CreatorId");
 
                     b.HasOne("Epsilon.Data.Models.Manufacturer", "Manufacturer")
@@ -520,6 +549,15 @@ namespace Epsilon.Data.Migrations
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Customer", b =>
+                {
+                    b.HasOne("Epsilon.Data.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Epsilon.Data.Models.Editor", b =>
                 {
                     b.HasOne("Epsilon.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
@@ -616,6 +654,11 @@ namespace Epsilon.Data.Migrations
             modelBuilder.Entity("Epsilon.Data.Models.Customer", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Epsilon.Data.Models.Editor", b =>
+                {
+                    b.Navigation("CreatedComputers");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Manufacturer", b =>

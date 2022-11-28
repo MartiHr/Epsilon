@@ -5,19 +5,17 @@ using Epsilon.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Epsilon.Services.Data
 {
     public class CategoryService : ICategoryService
     {
-        private readonly IDeletableEntityRepository<Category> categoriesRepo;
+        private readonly IDeletableEntityRepository<Category> categoriesRepository;
 
-        public CategoryService(IDeletableEntityRepository<Category> _categoriesRepo)
+        public CategoryService(IDeletableEntityRepository<Category> _categoriesRepository)
         {
-            categoriesRepo = _categoriesRepo;
+            categoriesRepository = _categoriesRepository;
         }
 
         public Task CreateAsync(string categoryName)
@@ -27,7 +25,7 @@ namespace Epsilon.Services.Data
 
         public async Task<List<T>> GetAllAsync<T>()
         {
-            return await categoriesRepo
+            return await categoriesRepository
                 .AllAsNoTracking()
                 .To<T>()
                 .ToListAsync();

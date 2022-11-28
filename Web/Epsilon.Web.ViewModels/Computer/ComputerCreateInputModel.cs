@@ -1,6 +1,7 @@
-﻿using Epsilon.Web.ViewModels.Category;
+﻿using System.Collections.Generic;
+
+using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Manufacturer;
-using System.Collections.Generic;
 
 namespace Epsilon.Web.ViewModels.Computer
 {
@@ -15,9 +16,13 @@ namespace Epsilon.Web.ViewModels.Computer
 
         public string Description { get; set; }
 
-        public IEnumerable<CategoryDropdownView> Categories { get; set; } = new List<CategoryDropdownView>();
+        public int CategoryId { get; set; }
 
-        public IEnumerable<ManufacturerDropdownView> Manufacturers { get; set; } = new List<ManufacturerDropdownView>();
+        public IEnumerable<CategoryDropdownViewModel> Categories { get; set; } = new List<CategoryDropdownViewModel>();
+
+        public int ManufacturerId { get; set; }
+
+        public IEnumerable<ManufacturerDropdownViewModel> Manufacturers { get; set; } = new List<ManufacturerDropdownViewModel>();
 
         // TODO: implement parts adding view
         // public ICollection<Part> Parts { get; set; } = new HashSet<Part>();

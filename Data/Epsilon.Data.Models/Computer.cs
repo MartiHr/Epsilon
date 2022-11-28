@@ -16,10 +16,10 @@ namespace Epsilon.Data.Models
 
         public string Description { get; set; }
 
-        [ForeignKey(nameof(ApplicationUser))]
+        [ForeignKey(nameof(Editor))]
         public string CreatorId { get; set; }
 
-        public ApplicationUser Creator { get; set; }
+        public Editor Creator { get; set; }
 
         public int CategoryId { get; set; }
 

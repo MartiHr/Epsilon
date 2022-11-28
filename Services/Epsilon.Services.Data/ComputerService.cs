@@ -1,12 +1,9 @@
-﻿using Epsilon.Data.Common.Repositories;
+﻿using System.Threading.Tasks;
+
+using Epsilon.Data.Common.Repositories;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.ViewModels.Computer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epsilon.Services.Data
 {
@@ -21,9 +18,15 @@ namespace Epsilon.Services.Data
 
         public async Task CreateAsync(ComputerCreateInputModel model, string ownerId)
         {
+
+
             var computer = new Computer()
             {
-
+                Name = model.Name,
+                Model = model.Model,
+                Price = model.Price,
+                Description = model.Description,
+                //CreatorId = 
             };
         }
     }
