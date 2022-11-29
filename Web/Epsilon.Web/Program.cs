@@ -70,6 +70,7 @@ namespace Epsilon.Web
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IManufacturerService, ManufacturerService>();
             services.AddTransient<IEditorService, EditorService>();
+            services.AddTransient<IPartService, PartService>();
         }
 
         private static void Configure(WebApplication app)

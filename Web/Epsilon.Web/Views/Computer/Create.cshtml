@@ -51,34 +51,49 @@
                                 }
                             </select>
                         </div>
-
+                        <div class="form-control">
+                            <input type="hidden" asp-for="@Model.PartsGroups"/>
+                            @foreach (var item in Model.PartsGroups)
+                            {
+                                <div class="mb-3">
+                                    <label asp-for="@item.PartId" class="form-label">@item.PartType</label>
+                                    <select asp-for="@item.PartId" class="form-control">
+                                        @foreach (var part in item.Parts)
+                                        {
+                                            <option value="@part.Id">@part.Model</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+                        </div>
+                        @*
                         <div class="mb-3">
-                            <label asp-for="@Model.ManufacturerId" class="form-label">Manufacturer</label>
-                            <select asp-for="@Model.ManufacturerId" class="form-control">
-                                @foreach (var manufacturer in Model.Manufacturers)
-                                {
-                                    <option value="@manufacturer.Id">@manufacturer.Name</option>
-                                }
-                            </select>
+                        <label asp-for="@Model.ManufacturerId" class="form-label">Manufacturer</label>
+                        <select asp-for="@Model.ManufacturerId" class="form-control">
+                        @foreach (var manufacturer in Model.Manufacturers)
+                        {
+                        <option value="@manufacturer.Id">@manufacturer.Name</option>
+                        }
+                        </select>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="@Model.ManufacturerId" class="form-label">Manufacturer</label>
-                            <select asp-for="@Model.ManufacturerId" class="form-control">
-                                @foreach (var manufacturer in Model.Manufacturers)
-                                {
-                                    <option value="@manufacturer.Id">@manufacturer.Name</option>
-                                }
-                            </select>
+                        <label asp-for="@Model.ManufacturerId" class="form-label">Manufacturer</label>
+                        <select asp-for="@Model.ManufacturerId" class="form-control">
+                        @foreach (var manufacturer in Model.Manufacturers)
+                        {
+                        <option value="@manufacturer.Id">@manufacturer.Name</option>
+                        }
+                        </select>
                         </div>
-                         <div class="mb-3">
-                            <label asp-for="@Model.ManufacturerId" class="form-label">Manufacturer</label>
-                            <select asp-for="@Model.ManufacturerId" class="form-control">
-                                @foreach (var manufacturer in Model.Manufacturers)
-                                {
-                                    <option value="@manufacturer.Id">@manufacturer.Name</option>
-                                }
-                            </select>
-                        </div>
+                        <div class="mb-3">
+                        <label asp-for="@Model.ManufacturerId" class="form-label">Manufacturer</label>
+                        <select asp-for="@Model.ManufacturerId" class="form-control">
+                        @foreach (var manufacturer in Model.Manufacturers)
+                        {
+                        <option value="@manufacturer.Id">@manufacturer.Name</option>
+                        }
+                        </select>
+                        </div>*@
                         <div class="mb-3">
                             <input class="btn btn-primary" type="submit" value="Create" />
                         </div>
