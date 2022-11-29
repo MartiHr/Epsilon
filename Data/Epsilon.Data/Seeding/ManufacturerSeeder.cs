@@ -15,7 +15,7 @@ namespace Epsilon.Data.Seeding
                 return;
             }
 
-            await dbContext.Manufacturers.AddAsync(new Manufacturer() { Name = "Asus", Country = "Gaindward" });
+            await dbContext.Manufacturers.AddAsync(new Manufacturer() { Name = "Gainward", Country = "Germany" });
             await dbContext.Manufacturers.AddAsync(new Manufacturer() { Name = "Asus", Country = "USA" });
             await dbContext.Manufacturers.AddAsync(new Manufacturer() { Name = "Acer", Country = "USA" });
 

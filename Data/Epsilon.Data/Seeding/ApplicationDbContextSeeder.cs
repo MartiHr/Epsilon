@@ -28,6 +28,7 @@ namespace Epsilon.Data.Seeding
                               new RolesSeeder(),
                               new CategorySeeder(),
                               new ManufacturerSeeder(),
+                              new PartSeeder(),
                           };
 
             foreach (var seeder in seeders)
