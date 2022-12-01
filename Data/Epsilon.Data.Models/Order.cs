@@ -1,16 +1,19 @@
-﻿using Epsilon.Data.Common.Models;
-using System;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+using Epsilon.Data.Common.Models;
 
 namespace Epsilon.Data.Models
 {
     public class Order : BaseDeletableModel<string>
     {
-        // TODO: add order status entity/enum
+        // TODO: add properties, add order status entity/enum
         public Order()
         {
             Id = Guid.NewGuid().ToString();
         }
 
+        [Required]
         public string CustomerId { get; set; }
 
         public Customer Customer { get; set; }

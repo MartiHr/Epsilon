@@ -1,6 +1,8 @@
-﻿using Epsilon.Data.Common.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+using Epsilon.Data.Common.Models;
 
 namespace Epsilon.Data.Models
 {
@@ -11,6 +13,7 @@ namespace Epsilon.Data.Models
             Id = Guid.NewGuid().ToString();
         }
 
+        [Required]
         public string ApplicationUserId { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }

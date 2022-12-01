@@ -58,7 +58,7 @@ namespace Epsilon.Data.Seeding
             await dbContext.Parts.AddAsync(new Part()
             {
                 Type = "Storage",
-                Model = "Samsung Evo 960",
+                Model = "Samsung Evo 970",
                 Description = "Hyper fast SSD",
                 ManufacturerId = 1,
             });

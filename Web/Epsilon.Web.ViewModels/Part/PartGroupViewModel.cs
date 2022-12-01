@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper.Configuration.Conventions;
+using System.Collections.Generic;
 
 namespace Epsilon.Web.ViewModels.Part
 {
     public class PartGroupViewModel
     {
+        // TODO: DELETE view model
+        public int Id { get; set; }
+
         public int PartId { get; set; }
 
         public string PartType { get; set; }

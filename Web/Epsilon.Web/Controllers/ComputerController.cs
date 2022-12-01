@@ -43,7 +43,8 @@ namespace Epsilon.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = await GetComputerCreateInputModel();
+            var model = new ComputerCreateInputModel();
+            await DecorateComputerCreateInputModel(model);
 
             return View(model);
         }
@@ -54,33 +55,7 @@ namespace Epsilon.Web.Controllers
             // TODO: implement error handling (catch functionality)
             if (!this.ModelState.IsValid)
             {
-                /*inputModel.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
-                inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
-
-                var partsDropdownModels = await partService.GetAllAsync<PartDropdownViewModel>();
-
-                var partsGroups = new List<PartGroupViewModel>()
-                {
-                    new PartGroupViewModel()
-                    {
-                        PartType = "GPU",
-                        Parts = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU"),
-                    },
-                    new PartGroupViewModel()
-                    {
-                        PartType = "CPU",
-                        Parts = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("CPU"),
-                    },
-                    new PartGroupViewModel()
-                    {
-                        PartType = "Storage",
-                        Parts = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("Storage"),
-                    },
-                };
-
-                inputModel.PartsGroups = new List<PartGroupViewModel>();*/
-
-                inputModel = await GetComputerCreateInputModel();
+                await DecorateComputerCreateInputModel(inputModel);
 
                 return this.View(inputModel);
             }
@@ -94,44 +69,26 @@ namespace Epsilon.Web.Controllers
                 // return RedirectToAction(nameof(All));
                 return RedirectToAction("Index", "Home");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // TODO: add toastr
-                ModelState.AddModelError(string.Empty, "Unexpected error");
+                ModelState.AddModelError(string.Empty, e.Message);
 
                 /*inputModel.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
                 inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();*/
-                inputModel = await GetComputerCreateInputModel();
+                await DecorateComputerCreateInputModel(inputModel);
 
                 return View(inputModel);
             }
         }
 
-        private async Task<ComputerCreateInputModel> GetComputerCreateInputModel()
+        private async Task DecorateComputerCreateInputModel(ComputerCreateInputModel model)
         {
-            return new ComputerCreateInputModel()
-            {
-                Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>(),
-                Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>(),
-                PartsGroups = new List<PartGroupViewModel>()
-                {
-                    new PartGroupViewModel()
-                    {
-                        PartType = "GPU",
-                        Parts = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU"),
-                    },
-                    new PartGroupViewModel()
-                    {
-                        PartType = "CPU",
-                        Parts = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("CPU"),
-                    },
-                    new PartGroupViewModel()
-                    {
-                        PartType = "Storage",
-                        Parts = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("Storage"),
-                    },
-                },
-            };
+            model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
+            model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+            model.GPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU");
+            model.CPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("CPU");
+            model.Storages = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("Storage");
         }
     }
 }
