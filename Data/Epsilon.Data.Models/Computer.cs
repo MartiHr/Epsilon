@@ -10,7 +10,6 @@ namespace Epsilon.Data.Models
 {
     public class Computer : BaseDeletableModel<int>
     {
-        [Required]
         [MaxLength(ComputerNameMaxLength)]
         public string Name { get; set; }
 
@@ -20,6 +19,7 @@ namespace Epsilon.Data.Models
 
         [Required]
         [Column(TypeName = "money")]
+        [Range(typeof(decimal), ComputerPriceMinValue, ComputerPriceMaxValue)]
         public decimal Price { get; set; }
 
         [Required]

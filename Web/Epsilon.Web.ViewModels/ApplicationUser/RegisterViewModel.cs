@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using static Epsilon.Data.Common.DataValidation.ApplicationUser;
+
 namespace Epsilon.Web.ViewModels.ApplicationUser
 {
     public class RegisterViewModel
@@ -7,12 +9,12 @@ namespace Epsilon.Web.ViewModels.ApplicationUser
         // TODO: Finish implementing the viewModel: add properties and other things if needed
 
         [Required]
-        [StringLength(20, MinimumLength = 5)]
+        [StringLength(ApplicationUserUsernameMaxLength, MinimumLength = ApplicationUserUsernameMinLength)]
         public string UserName { get; set; } = null!;
 
         [Required]
         [EmailAddress]
-        [StringLength(60, MinimumLength = 10)]
+        [StringLength(ApplicationUserEmailAddressMaxLength, MinimumLength = ApplicationUserEmailAddressMinLength)]
         public string Email { get; set; } = null!;
 
         [Required]
@@ -21,7 +23,7 @@ namespace Epsilon.Web.ViewModels.ApplicationUser
 
         [Required]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = "Password and ConfirmPassword do not match")]
+        [Compare(nameof(Password), ErrorMessage = ApplicationUserConfirmPasswordErrorMessage)]
         public string ConfirmPassword { get; set; } = null!;
     }
 }

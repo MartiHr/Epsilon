@@ -5,6 +5,13 @@
         // TODO: add remaining data validation constants
         public static class ApplicationUser
         {
+            public const int ApplicationUserUsernameMinLength = 5;
+            public const int ApplicationUserUsernameMaxLength = 20;
+
+            public const int ApplicationUserEmailAddressMinLength = 10;
+            public const int ApplicationUserEmailAddressMaxLength = 60;
+
+            public const string ApplicationUserConfirmPasswordErrorMessage = "Password and ConfirmPassword do not match";
         }
 
         public static class Category
@@ -14,11 +21,17 @@
 
         public static class Computer
         {
+            public const int ComputerNameMinLength = 3;
             public const int ComputerNameMaxLength = 50;
 
+            public const int ComputerModelMinLength = 5;
             public const int ComputerModelMaxLength = 50;
 
-            public const int ComputerDescriptionMaxLength = 50;
+            public const string ComputerPriceMinValue = "0";
+            public const string ComputerPriceMaxValue = "15000";
+
+            public const int ComputerDescriptionMinLength = 20;
+            public const int ComputerDescriptionMaxLength = 500;
         }
 
         public static class Customer
