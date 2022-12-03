@@ -10,6 +10,8 @@ namespace Epsilon.Data.Models
 {
     public class Computer : BaseDeletableModel<int>
     {
+        // TODO: add images
+
         [MaxLength(ComputerNameMaxLength)]
         public string Name { get; set; }
 
