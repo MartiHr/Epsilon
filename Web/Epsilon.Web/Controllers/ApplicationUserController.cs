@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-
+using Epsilon.Common;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
@@ -67,6 +67,8 @@ namespace Epsilon.Web.Controllers
 
                 // TODO: move creation of editor to the correct place
                 await editorService.CreateAsync(user.Id);
+                TempData[GlobalConstants.SuccessMessage] = "Successfully registered!";
+
                 return RedirectToAction(nameof(Login));
             }
 
@@ -110,6 +112,8 @@ namespace Epsilon.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    TempData[GlobalConstants.SuccessMessage] = "Successfully logged in!";
+
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -122,6 +126,8 @@ namespace Epsilon.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
+
+            TempData[GlobalConstants.WarningMessage] = "Logged out!";
 
             return RedirectToAction("Index", "Home");
         }

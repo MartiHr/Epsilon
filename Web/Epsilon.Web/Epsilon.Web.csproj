@@ -47,5 +47,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administration\Views\Dashboard\" />
+    <Folder Include="wwwroot\lib\toastr\" />
   </ItemGroup>
 </Project>

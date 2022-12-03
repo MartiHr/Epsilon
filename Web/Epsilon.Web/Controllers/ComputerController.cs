@@ -84,6 +84,7 @@ namespace Epsilon.Web.Controllers
 
         private async Task DecorateComputerCreateInputModel(ComputerCreateInputModel model)
         {
+            // TODO: extract logic elsewhere
             model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
             model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
             model.GPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU");

@@ -1,0 +1,22 @@
+﻿@using Epsilon.Common
+
+@if (TempData[GlobalConstants.ErrorMessage] != null)
+{
+    <script>
+        $(function () { toastr.error('@TempData[GlobalConstants.ErrorMessage].ToString()'); });
+    </script>
+}
+
+@if (TempData[GlobalConstants.WarningMessage] != null)
+{
+    <script>
+        $(function () { toastr.warning('@TempData[GlobalConstants.WarningMessage].ToString()'); });
+    </script>
+}
+
+@if (TempData[GlobalConstants.SuccessMessage] != null)
+{
+    <script>
+        $(function () { toastr.success('@TempData[GlobalConstants.SuccessMessage].ToString()'); });
+    </script>
+}
