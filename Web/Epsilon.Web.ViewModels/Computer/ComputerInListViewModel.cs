@@ -1,6 +1,13 @@
-﻿namespace Epsilon.Web.ViewModels.Computer
+﻿using System.Linq;
+
+using AutoMapper;
+using Epsilon.Services.Mapping;
+
+using ComputerModel = Epsilon.Data.Models.Computer;
+
+namespace Epsilon.Web.ViewModels.Computer
 {
-    public class ComputerInListViewModel
+    public class ComputerInListViewModel : IMapFrom<ComputerModel>, IHaveCustomMappings
     {
         public string DisplayName { get; set; }
 
@@ -13,5 +20,18 @@
         public string StorageModel { get; set; }
 
         public decimal Price { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<ComputerModel, ComputerInListViewModel>()
+                .ForMember(x => x.CPUModel, opt =>
+                    opt.MapFrom(c => c.Parts.Where(p => p.Type == "CPU").First().Model))
+                .ForMember(x => x.StorageModel, opt =>
+                   opt.MapFrom(c => c.Parts.Where(p => p.Type == "Storage").First().Model))
+                .ForMember(x => x.GPUModel, opt =>
+                   opt.MapFrom(c => c.Parts.Where(p => p.Type == "GPU").First().Model))
+                .ForMember(x => x.DisplayName, opt =>
+                 opt.MapFrom(c => c.Name ?? $"{c.Manufacturer.Name} {c.Model}"));
+        }
     }
 }

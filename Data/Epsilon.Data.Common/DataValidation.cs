@@ -27,7 +27,7 @@
             public const int ComputerModelMinLength = 5;
             public const int ComputerModelMaxLength = 50;
 
-            public const string ComputerPriceMinValue = "0";
+            public const string ComputerPriceMinValue = "300";
             public const string ComputerPriceMaxValue = "15000";
 
             public const int ComputerDescriptionMinLength = 20;

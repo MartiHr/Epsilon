@@ -35,9 +35,15 @@ namespace Epsilon.Web.Controllers
             partService = _partService;
         }
 
-        public IActionResult All()
+        public async Task<IActionResult> All(int id = 1)
         {
-            return View();
+            var model = new ComputersListViewModel()
+            {
+                PageNumber = id,
+                Computers = await computerService.GetAllAsync<ComputerInListViewModel>(id, 12),
+            };
+
+            return View(model);
         }
 
         [HttpGet]

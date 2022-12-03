@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Epsilon.Data.Common.Repositories;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
+using Epsilon.Services.Mapping;
 using Epsilon.Web.ViewModels.Computer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Epsilon.Services.Data
 {
@@ -29,7 +31,7 @@ namespace Epsilon.Services.Data
                 .Where(p => p.Id == model.GPUId || p.Id == model.CPUId || p.Id == model.StorageId)
                 .ToListAsync();
 
-            // parts.Add(new Part() { Id = model.CPUId,  });
+            // parts.Add(new Part() { Id = model.CPUId, });
             // parts.Add(new Part() { Id = model.GPUId });
             // parts.Add(new Part() { Id = model.StorageId });
 
@@ -51,6 +53,26 @@ namespace Epsilon.Services.Data
 
             computerRepository.Update(computer);
             await computerRepository.SaveChangesAsync();
+        }
+
+        public async Task<List<T>> GetAllAsync<T>(int page, int itemsPerPage)
+        {
+            var items = await computerRepository
+                .AllAsNoTracking()
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .To<T>()
+                .ToListAsync();
+
+            return items;
+        }
+
+        public int GetCount()
+        {
+            computerRepository
+                .AllAsNoTracking()
+                .Count();
         }
     }
 }

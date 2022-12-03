@@ -11,5 +11,7 @@
         public const string WarningMessage = "WarningMessage";
 
         public const string SuccessMessage = "SuccessMessage";
+
+
     }
 }

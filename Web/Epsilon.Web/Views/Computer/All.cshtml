@@ -9,23 +9,24 @@
 <hr />
 
 <div class="row">
-    @for (int i = 0; i < 12; i++)
+    @foreach (var computer in Model.Computers)
     {
         <div class="col-md-3 ">
             <div class="card mb-3">
-                <h3 class="card-header mb-3">Acer Predator</h3>
-               @* <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-                </div>*@
-                <img src="https://s13emagst.akamaized.net/products/19947/19946970/images/res_6c41faa18c6288743162203c3fda3490.jpg?width=720&height=720&hash=F521B89827BF698E6E8431BB41FD3C0A" alt="Girl in a jacket" width="100%" height="250">
+                <h3 class="card-header mb-3">@computer.DisplayName</h3>
+                @* <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+            </div>*@
+                @*<img src="@computer.ImageUrl" alt="Computer Image" width="100%" height="250">*@
+                <img src="https://s13emagst.akamaized.net/products/19947/19946970/images/res_6c41faa18c6288743162203c3fda3490.jpg?width=720&height=720&hash=F521B89827BF698E6E8431BB41FD3C0A" alt="Computer Image" width="100%" height="250">
                 <div class="card-body">
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Intel Core i5-11400 (2.6/4.4GHz, 12M)</li>
-                    <li class="list-group-item">Intel UHD Graphics 630</li>
-                    <li class="list-group-item">16 GB DDR4 3200 MHz</li>
+                    <li class="list-group-item">@computer.CPUModel</li>
+                    <li class="list-group-item">@computer.GPUModel</li>
+                    <li class="list-group-item">@computer.StorageModel</li>
                 </ul>
                 <div class="card-body text-center">
                     <div class="d-flex justify-content-evenly align-items-center">
@@ -33,13 +34,39 @@
                         <button type="button" class="btn btn-primary text-center">Details</button>
                     </div>
                 </div>
-               @* <div class="card-footer text-muted">
-                    2 days ago
-                </div>*@
+                @* <div class="card-footer text-muted">
+            2 days ago
+            </div>*@
             </div>
         </div>
     }
 </div>
+
+@*  @for (int i = 0; i < 12; i++)
+    {
+    <div class="col-md-3 ">
+    <div class="card mb-3">
+    <h3 class="card-header mb-3">Acer Predator</h3>
+
+    <img src="https://s13emagst.akamaized.net/products/19947/19946970/images/res_6c41faa18c6288743162203c3fda3490.jpg?width=720&height=720&hash=F521B89827BF698E6E8431BB41FD3C0A" alt="Girl in a jacket" width="100%" height="250">
+    <div class="card-body">
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">Intel Core i5-11400 (2.6/4.4GHz, 12M)</li>
+    <li class="list-group-item">Intel UHD Graphics 630</li>
+    <li class="list-group-item">16 GB DDR4 3200 MHz</li>
+    </ul>
+    <div class="card-body text-center">
+    <div class="d-flex justify-content-evenly align-items-center">
+    <span class="align-middle"><b>Price:</b> 1500 usd</span>
+    <button type="button" class="btn btn-primary text-center">Details</button>
+    </div>
+    </div>
+
+    </div>
+    </div>
+    }*@
 
 
 
