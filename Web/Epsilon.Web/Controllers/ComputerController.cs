@@ -37,10 +37,14 @@ namespace Epsilon.Web.Controllers
 
         public async Task<IActionResult> All(int id = 1)
         {
+            const int ItemsPerPage = 8;
+
             var model = new ComputersListViewModel()
             {
                 PageNumber = id,
-                Computers = await computerService.GetAllAsync<ComputerInListViewModel>(id, 12),
+                ComputersCount = computerService.GetCount(),
+                ItemsPerPage = ItemsPerPage,
+                Computers = await computerService.GetAllAsync<ComputerInListViewModel>(id, ItemsPerPage),
             };
 
             return View(model);

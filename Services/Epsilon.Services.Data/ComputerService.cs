@@ -70,7 +70,7 @@ namespace Epsilon.Services.Data
 
         public int GetCount()
         {
-            computerRepository
+            return computerRepository
                 .AllAsNoTracking()
                 .Count();
         }

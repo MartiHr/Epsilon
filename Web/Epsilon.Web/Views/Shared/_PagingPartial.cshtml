@@ -1,0 +1,33 @@
+﻿@model PagingViewModel
+
+<div>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.HasPreviousPage ? string.Empty : "disabled")">
+            <a class="page-link" asp-action="All" asp-route-id="@Model.PreviousPageNumber">&laquo;</a>
+        </li>
+        @for (int i = Model.PageNumber - 4; i < Model.PageNumber; i++)
+        {
+            if (i > 0)
+            {
+                <li class="page-item ">
+                    <a class="page-link" asp-action="All" asp-route-id="@i">@i</a>
+                </li>
+            }
+        }
+        <li class="page-item active">
+            <a class="page-link" href="#">@Model.PageNumber</a>
+        </li>
+        @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 4; i++)
+        {
+            if (i <= Model.PagesCount)
+            {
+                <li class="page-item ">
+                    <a class="page-link" asp-action="All" asp-route-id="@i">@i</a>
+                </li>
+            }
+        }
+        <li class="page-item @(Model.HasNextPage ? string.Empty : "disabled")">
+            <a class="page-link" asp-action="All" asp-route-id="@Model.NextPageNumber">&raquo;</a>
+        </li>
+    </ul>
+</div>
