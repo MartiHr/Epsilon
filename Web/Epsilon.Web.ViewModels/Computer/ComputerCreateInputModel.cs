@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Manufacturer;
 using Epsilon.Web.ViewModels.Part;
 using Microsoft.AspNetCore.Http;
+
 using static Epsilon.Data.Common.DataValidation.Computer;
 
 namespace Epsilon.Web.ViewModels.Computer
@@ -53,11 +55,6 @@ namespace Epsilon.Web.ViewModels.Computer
 
         public ICollection<IFormFile> Images { get; set; }
 
-        // TODO: implement parts adding view
-        // public ICollection<Part> Parts { get; set; } = new HashSet<Part>();
-
-        //// public List<int> PartsGroupsIds { get; set; }
-
-        //// public IEnumerable<PartGroupViewModel> PartsGroups { get; set; } = new List<PartGroupViewModel>();
+        
     }
 }

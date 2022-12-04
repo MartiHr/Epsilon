@@ -31,10 +31,6 @@ namespace Epsilon.Services.Data
                 .Where(p => p.Id == model.GPUId || p.Id == model.CPUId || p.Id == model.StorageId)
                 .ToListAsync();
 
-            // parts.Add(new Part() { Id = model.CPUId, });
-            // parts.Add(new Part() { Id = model.GPUId });
-            // parts.Add(new Part() { Id = model.StorageId });
-
             var computer = new Computer()
             {
                 Name = model.Name,
@@ -45,6 +41,11 @@ namespace Epsilon.Services.Data
                 ManufacturerId = model.ManufacturerId,
                 CreatorId = creatorId,
             };
+
+            foreach (var image in model.Images)
+            {
+
+            }
 
             await computerRepository.AddAsync(computer);
             await computerRepository.SaveChangesAsync();
