@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using AutoMapper;
+using Epsilon.Services.Mapping;
 using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Manufacturer;
 using Epsilon.Web.ViewModels.Part;
@@ -54,7 +56,5 @@ namespace Epsilon.Web.ViewModels.Computer
         public IEnumerable<PartDropdownViewModel> Storages { get; set; } = new List<PartDropdownViewModel>();
 
         public ICollection<IFormFile> Images { get; set; }
-
-        
     }
 }

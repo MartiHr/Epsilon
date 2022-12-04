@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-
+using System.Security.Cryptography.X509Certificates;
 using AutoMapper;
 using Epsilon.Services.Mapping;
 
@@ -31,7 +31,9 @@ namespace Epsilon.Web.ViewModels.Computer
                 .ForMember(x => x.GPUModel, opt =>
                    opt.MapFrom(c => c.Parts.Where(p => p.Type == "GPU").First().Model))
                 .ForMember(x => x.DisplayName, opt =>
-                 opt.MapFrom(c => c.Name ?? $"{c.Manufacturer.Name} {c.Model}"));
+                   opt.MapFrom(c => c.Name ?? $"{c.Manufacturer.Name} {c.Model}"))
+                .ForMember(x => x.ImageUrl, opt =>
+                   opt.MapFrom(c => $"/images/computers/{c.Images.FirstOrDefault().Id}.{c.Images.FirstOrDefault().Extension}"));
         }
     }
 }

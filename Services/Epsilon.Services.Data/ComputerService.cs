@@ -15,22 +15,18 @@ namespace Epsilon.Services.Data
     public class ComputerService : IComputerService
     {
         private readonly IDeletableEntityRepository<Computer> computerRepository;
-        private readonly IDeletableEntityRepository<Part> partRepository;
-
+        private readonly IPartService partService;
+        
         public ComputerService(IDeletableEntityRepository<Computer> _computerRepository,
-            IDeletableEntityRepository<Part> _partRepository)
+            IDeletableEntityRepository<Part> _partRepository,
+            IPartService _partService)
         {
             computerRepository = _computerRepository;
-            partRepository = _partRepository;
+            partService = _partService;
         }
 
         public async Task CreateAsync(ComputerCreateInputModel model, string creatorId)
         {
-            var parts = await partRepository
-                .AllAsNoTracking()
-                .Where(p => p.Id == model.GPUId || p.Id == model.CPUId || p.Id == model.StorageId)
-                .ToListAsync();
-
             var computer = new Computer()
             {
                 Name = model.Name,
@@ -42,18 +38,29 @@ namespace Epsilon.Services.Data
                 CreatorId = creatorId,
             };
 
-            foreach (var image in model.Images)
-            {
+            //foreach (var image in model.Images)
+            //{
+            //    var imageModel = new Image()
+            //    {
+            //        CreatorId = creatorId,
 
-            }
+            //    };
+            //}
 
             await computerRepository.AddAsync(computer);
             await computerRepository.SaveChangesAsync();
 
-            computer.Parts = parts;
+            var partIds = new int[]
+            {
+                model.GPUId,
+                model.CPUId,
+                model.StorageId,
+            };
 
-            computerRepository.Update(computer);
-            await computerRepository.SaveChangesAsync();
+            foreach (var partId in partIds)
+            {
+                await partService.AssignComputerToPart(computer, partId);
+            }
         }
 
         public async Task<List<T>> GetAllAsync<T>(int page, int itemsPerPage)

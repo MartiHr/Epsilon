@@ -88,8 +88,6 @@ namespace Epsilon.Web.Controllers
                 // TODO: add toastr
                 ModelState.AddModelError(string.Empty, e.Message);
 
-                /*inputModel.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
-                inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();*/
                 await DecorateComputerCreateInputModel(inputModel);
 
                 return View(inputModel);
