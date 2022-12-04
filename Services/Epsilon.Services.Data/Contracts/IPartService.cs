@@ -1,6 +1,7 @@
-﻿using Epsilon.Data.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using Epsilon.Data.Models;
 
 namespace Epsilon.Services.Data.Contracts
 {
@@ -10,6 +11,6 @@ namespace Epsilon.Services.Data.Contracts
 
         Task<List<T>> GetAllOfTypeAsync<T>(string type);
 
-        Task AssignComputerToPart(Computer computer, int partId);
+        Task AssignComputerToExistingPartAsync(Computer computer, int partId);
     }
 }

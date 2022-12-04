@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -21,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Epsilon.Data.Common\Epsilon.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\Epsilon.Data.Models\Epsilon.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Epsilon.Common\Epsilon.Common.csproj" />
     <ProjectReference Include="..\..\Web\Epsilon.Web.ViewModels\Epsilon.Web.ViewModels.csproj" />
     <ProjectReference Include="..\Epsilon.Services.Mapping\Epsilon.Services.Mapping.csproj" />
   </ItemGroup>

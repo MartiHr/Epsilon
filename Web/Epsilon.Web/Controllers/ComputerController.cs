@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Epsilon.Common;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Computer;
 using Epsilon.Web.ViewModels.Manufacturer;
 using Epsilon.Web.ViewModels.Part;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Epsilon.Web.Controllers
@@ -20,19 +22,22 @@ namespace Epsilon.Web.Controllers
         private readonly IManufacturerService manufacturerService;
         private readonly IEditorService editorService;
         private readonly IPartService partService;
+        private readonly IWebHostEnvironment hostEnvironment;
 
         public ComputerController
             (IComputerService _computerService,
             ICategoryService _categoriesService,
             IManufacturerService _manufacturerService,
             IEditorService _editorService,
-            IPartService _partService)
+            IPartService _partService,
+            IWebHostEnvironment _hostEnvironment)
         {
             computerService = _computerService;
             categoriesService = _categoriesService;
             manufacturerService = _manufacturerService;
             editorService = _editorService;
             partService = _partService;
+            hostEnvironment = _hostEnvironment;
         }
 
         public async Task<IActionResult> All(int id = 1)
@@ -71,21 +76,21 @@ namespace Epsilon.Web.Controllers
             {
                 await DecorateComputerCreateInputModel(inputModel);
 
-                return this.View(inputModel);
+                return View(inputModel);
             }
 
             try
             {
                 var creatorId = await editorService.GetEditorIdAsync(User.Id());
 
-                await computerService.CreateAsync(inputModel, creatorId);
+                await computerService.CreateAsync(inputModel, creatorId, $"{hostEnvironment.WebRootPath}/images");
 
                 // return RedirectToAction(nameof(All));
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception e)
             {
-                // TODO: add toastr
+                TempData[GlobalConstants.ErrorMessage] = e.Message;
                 ModelState.AddModelError(string.Empty, e.Message);
 
                 await DecorateComputerCreateInputModel(inputModel);

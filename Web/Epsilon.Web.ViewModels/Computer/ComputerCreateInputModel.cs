@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using System.Linq;
 using AutoMapper;
+using Epsilon.Common;
 using Epsilon.Services.Mapping;
 using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Manufacturer;
@@ -55,6 +56,8 @@ namespace Epsilon.Web.ViewModels.Computer
 
         public IEnumerable<PartDropdownViewModel> Storages { get; set; } = new List<PartDropdownViewModel>();
 
+        [Required]
+        [AllowedExtensionsForCollection(new string[] { GlobalConstants.PNGExtension, GlobalConstants.JPGExtension, GlobalConstants.JPEGExtension })]
         public ICollection<IFormFile> Images { get; set; }
     }
 }

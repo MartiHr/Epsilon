@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
+
 using Epsilon.Common;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
-using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.ApplicationUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

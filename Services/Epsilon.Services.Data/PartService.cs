@@ -19,10 +19,10 @@ namespace Epsilon.Services.Data
             partRepository = _partRepository;
         }
 
-        public async Task AssignComputerToPart(Computer computer, int partId)
+        public async Task AssignComputerToExistingPartAsync(Computer computer, int partId)
         {
             var part = await partRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(p => p.Id == partId)
                 .FirstOrDefaultAsync();
 

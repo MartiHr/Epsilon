@@ -12,6 +12,12 @@
 
         public const string SuccessMessage = "SuccessMessage";
 
+        public const string JPGExtension = ".jpg";
 
+        public const string JPEGExtension = ".jpeg";
+
+        public const string PNGExtension = ".png";
+
+        public static readonly string[] AllowedImageExtensions = { ".jpg", ".jpeg", ".png" };
     }
 }

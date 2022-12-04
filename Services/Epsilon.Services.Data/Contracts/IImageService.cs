@@ -1,6 +1,8 @@
-﻿namespace Epsilon.Services.Data.Contracts
+﻿using System.Threading.Tasks;
+
+namespace Epsilon.Services.Data.Contracts
 {
-    public class IImageService
+    public interface IImageService
     {
     }
 }

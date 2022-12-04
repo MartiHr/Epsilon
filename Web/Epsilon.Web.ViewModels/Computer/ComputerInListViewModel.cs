@@ -33,7 +33,7 @@ namespace Epsilon.Web.ViewModels.Computer
                 .ForMember(x => x.DisplayName, opt =>
                    opt.MapFrom(c => c.Name ?? $"{c.Manufacturer.Name} {c.Model}"))
                 .ForMember(x => x.ImageUrl, opt =>
-                   opt.MapFrom(c => $"/images/computers/{c.Images.FirstOrDefault().Id}.{c.Images.FirstOrDefault().Extension}"));
+                   opt.MapFrom(c => $"/images/computers/{c.Images.FirstOrDefault().Id}{c.Images.FirstOrDefault().Extension}"));
         }
     }
 }
