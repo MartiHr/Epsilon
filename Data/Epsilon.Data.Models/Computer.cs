@@ -10,7 +10,7 @@ namespace Epsilon.Data.Models
 {
     public class Computer : BaseDeletableModel<int>
     {
-        // TODO: add images
+        //// TODO: add images
 
         [MaxLength(ComputerNameMaxLength)]
         public string Name { get; set; }
@@ -45,5 +45,7 @@ namespace Epsilon.Data.Models
         public Manufacturer Manufacturer { get; set; }
 
         public ICollection<Part> Parts { get; set; } = new HashSet<Part>();
+
+        public ICollection<Image> Images { get; set; } = new HashSet<Image>();
     }
 }

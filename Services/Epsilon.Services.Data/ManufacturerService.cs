@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Epsilon.Data.Common.Repositories;
@@ -22,6 +23,7 @@ namespace Epsilon.Services.Data
         {
             return await manufacturerRepository
                 .AllAsNoTracking()
+                .OrderBy(m => m.Name)
                 .To<T>()
                 .ToListAsync();
         }

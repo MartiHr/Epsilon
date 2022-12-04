@@ -5,6 +5,7 @@ using Epsilon.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Epsilon.Services.Data
@@ -27,6 +28,7 @@ namespace Epsilon.Services.Data
         {
             return await categoriesRepository
                 .AllAsNoTracking()
+                .OrderBy(c => c.Name)
                 .To<T>()
                 .ToListAsync();
         }

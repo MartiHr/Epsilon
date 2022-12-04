@@ -52,6 +52,16 @@
                                 }
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.Images" class="form-label"></label>
+                            <input asp-for="@Model.Images" class="form-control" aria-required="true" />
+                            <span asp-validation-for="@Model.Images" class="text-danger"></span>
+
+                         @*   <div class="form-group">
+                                <label for="formFile" class="form-label mt-4">Default file input example</label>
+                                <input class="form-control" type="file" id="formFile">
+                            </div>*@
+                        </div>
                         <div class="form-control mb-3">
                             <div class="mb-3">
                                 <label asp-for="@Model.CPUs" class="form-label">CPU</label>

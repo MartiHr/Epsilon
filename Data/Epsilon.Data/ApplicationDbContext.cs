@@ -36,6 +36,8 @@ namespace Epsilon.Data
 
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<Image> Images { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

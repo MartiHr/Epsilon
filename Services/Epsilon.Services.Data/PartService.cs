@@ -1,11 +1,12 @@
-﻿using Epsilon.Data.Common.Repositories;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using Epsilon.Data.Common.Repositories;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Epsilon.Services.Data
 {
@@ -22,6 +23,7 @@ namespace Epsilon.Services.Data
         {
             return await partRepository
                 .AllAsNoTracking()
+                .OrderBy(p => p.Model)
                 .To<T>()
                 .ToListAsync();
         }
@@ -31,6 +33,7 @@ namespace Epsilon.Services.Data
             return await partRepository
                 .AllAsNoTracking()
                 .Where(p => p.Type == type)
+                .OrderBy(p => p.Model)
                 .To<T>()
                 .ToListAsync();
         }

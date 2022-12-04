@@ -37,8 +37,12 @@ namespace Epsilon.Web.Controllers
 
         public async Task<IActionResult> All(int id = 1)
         {
-            const int ItemsPerPage = 8;
+            if (id <= 0)
+            {
+                return NotFound();
+            }
 
+            const int ItemsPerPage = 8;
             var model = new ComputersListViewModel()
             {
                 PageNumber = id,
