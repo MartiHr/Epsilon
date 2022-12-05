@@ -19,5 +19,7 @@ namespace Epsilon.Data.Models
         public ApplicationUser ApplicationUser { get; set; }
 
         public ICollection<Computer> CreatedComputers { get; set; } = new HashSet<Computer>();
+
+        public ICollection<Image> CreatedImages { get; set; } = new HashSet<Image>();
     }
 }

@@ -29,7 +29,7 @@ namespace Epsilon.Data.Models
         public string Description { get; set; }
 
         [Required]
-        [ForeignKey(nameof(Editor))]
+        [ForeignKey(nameof(Creator))]
         public string CreatorId { get; set; }
 
         public Editor Creator { get; set; }
