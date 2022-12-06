@@ -7,27 +7,76 @@
 
 <h1>@Model.Name</h1>
 
-<div class="container px-4 px-lg-5 my-5">
-    <div class="row gx-4 gx-lg-5 align-items-center">
-        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="@Model.ImageUrls.First()" alt="..." /></div>
-        <div class="col-md-6">
-            <div class="small mb-1">SKU: BST-498</div>
-            <h1 class="display-5 fw-bolder">@Model.DisplayName</h1>
-            <div class="fs-5 mb-5">
-                @*<span class="text-decoration-line-through">$45.00</span>*@
-                <span>$@Model.Price.ToString("f2")</span>
-            </div>
-            <p class="lead">@Model.Description</p>
-            <div class="d-flex">
-                <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                    <i class="bi-cart-fill me-1"></i>
-                    Add to cart
-                </button>
-            </div>
+@*<div id="carouselExampleControls" class="carousel carousel-dark slide col-md-6" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="@Model.ImageUrls.First()" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="@Model.ImageUrls.Skip(1).First()" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="@Model.ImageUrls.First()" class="d-block w-100" alt="...">
         </div>
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon text-black" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>*@
+
+<div class="container px-4 px-lg-5 my-5 d-flex justify-content-between">
+    <div id="carouselExampleControls" class="carousel carousel-dark slide col-md-6">
+        <div class="carousel-inner h-100 d-flex align-items-center">
+            <div class="carousel-item active">
+                <img src="@Model.ImageUrls.First()" class="d-block mb-5 mb-md-0 w-100" data-bs-interval="false" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="@Model.ImageUrls.Skip(1).First()" class="d-block mb-5 mb-md-0 w-100" data-bs-interval="false" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="@Model.ImageUrls.First()" class="d-block mb-5 mb-md-0 w-100" data-bs-interval="false" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon text-black" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    @*<div class="row gx-4 gx-lg-5 align-items-center">*@
+    <div class="col-md-5 align-items-center">
+        <div class="small mb-1">@Model.Manufacturer: @Model.Model</div>
+        <h1 class="display-5 fw-bolder">@Model.DisplayName</h1>
+        <div class="fs-5 mb-5">
+            @*<span class="text-decoration-line-through">$45.00</span>*@
+            <span>$@Model.Price.ToString("f2")</span>
+        </div>
+        <div class="mb-5">
+            <ul class="list-group">
+                <li class="list-group-item">@Model.CPU.Model</li>
+                <li class="list-group-item">@Model.GPU.Model</li>
+                <li class="list-group-item">@Model.Storage.Model</li>
+            </ul>
+        </div>
+        <div class="lead text-break mb-3">@Model.Description</div>
+        <div class="d-flex">
+            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                <i class="bi-cart-fill me-1"></i>
+                Add to cart
+            </button>
+        </div>
+    </div>
+    @*</div>*@
 </div>
-        </section>
+        @*</section>*@
 <!-- Related items section-->
 <section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">
