@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Create Computer";
-    // TODO: Delete unused code from file
 }
 
 <div class="form-body">
@@ -91,21 +90,6 @@
                                 </select>
                             </div>
                         </div>
-                        @*@<div class="form-control mb-3">
-                            <input type="hidden" asp-for="@Model.PartsGroups"/>
-                            @foreach (var partGroup in Model.PartsGroups)
-                            {
-                                <div data-bind="@partGroup.Parts" class="mb-3">
-                                    <label asp-for="@partGroup.PartId" class="form-label">@partGroup.PartType</label>
-                                    <select asp-for="@partGroup.PartId" class="form-control">
-                                        @foreach (var part in partGroup.Parts)
-                                        {
-                                            <option value="@part.Id">@part.Model</option>
-                                        }
-                                    </select>
-                                </div>
-                            }
-                        </div>*@
                         <div class="mb-3">
                             <input class="btn btn-primary" type="submit" value="Create" />
                         </div>

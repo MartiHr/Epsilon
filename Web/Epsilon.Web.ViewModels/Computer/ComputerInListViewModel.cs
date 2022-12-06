@@ -9,6 +9,8 @@ namespace Epsilon.Web.ViewModels.Computer
 {
     public class ComputerInListViewModel : IMapFrom<ComputerModel>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         public string DisplayName { get; set; }
 
         public string ImageUrl { get; set; }

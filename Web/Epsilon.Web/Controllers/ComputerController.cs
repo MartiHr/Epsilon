@@ -99,6 +99,21 @@ namespace Epsilon.Web.Controllers
             }
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            try
+            {
+                var computer = await computerService.GetByIdAsync<ComputerDetailsViewModel>(id);
+
+                return View(computer);
+            }
+            catch (Exception e)
+            {
+                TempData[GlobalConstants.ErrorMessage] = e.Message;
+                return RedirectToAction(nameof(All));
+            }
+        }
+
         private async Task DecorateComputerCreateInputModel(ComputerCreateInputModel model)
         {
             // TODO: extract logic elsewhere

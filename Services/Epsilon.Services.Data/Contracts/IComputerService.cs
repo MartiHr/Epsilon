@@ -12,6 +12,8 @@ namespace Epsilon.Services.Data.Contracts
 
         Task CreateAsync(ComputerCreateInputModel model, string creatorId, string imagePath);
 
+        Task<T> GetByIdAsync<T>(int id);
+
         int GetCount();
     }
 }

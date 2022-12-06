@@ -20,7 +20,6 @@ namespace Epsilon.Services.Data
         private readonly IPartService partService;
 
         public ComputerService(IDeletableEntityRepository<Computer> _computerRepository,
-            IDeletableEntityRepository<Part> _partRepository,
             IPartService _partService)
         {
             computerRepository = _computerRepository;
@@ -92,6 +91,22 @@ namespace Epsilon.Services.Data
                 .ToListAsync();
 
             return items;
+        }
+
+        public async Task<T> GetByIdAsync<T>(int id)
+        {
+            var computer = await computerRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+
+            if (computer == null)
+            {
+                throw new Exception("No such computer exists.");
+            }
+
+            return computer;
         }
 
         public int GetCount()
