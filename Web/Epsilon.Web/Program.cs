@@ -11,6 +11,7 @@ using Epsilon.Services.Data.Contracts;
 using Epsilon.Services.Mapping;
 using Epsilon.Services.Messaging;
 using Epsilon.Web.ViewModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace Epsilon.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
             ConfigureServices(builder.Services, builder.Configuration);
             var app = builder.Build();
             Configure(app);
@@ -54,6 +56,13 @@ namespace Epsilon.Web
                 }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/ApplicationUser/Login";
+                options.LogoutPath = "/ApplicationUser/Logout";
+                options.AccessDeniedPath = "/ApplicationUser/AccessDenied";
+            });
 
             services.AddSingleton(configuration);
 

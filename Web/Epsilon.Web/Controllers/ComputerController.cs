@@ -42,6 +42,7 @@ namespace Epsilon.Web.Controllers
             hostEnvironment = _hostEnvironment;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> All(int id = 1)
         {
             if (id <= 0)
@@ -101,6 +102,7 @@ namespace Epsilon.Web.Controllers
             }
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             try
