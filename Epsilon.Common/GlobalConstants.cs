@@ -6,6 +6,8 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string EditorRoleName = "Editor";
+
         public const string ErrorMessage = "ErrorMessage";
 
         public const string WarningMessage = "WarningMessage";

@@ -80,6 +80,11 @@ namespace Epsilon.Services.Data
             }
         }
 
+        public Task EditByIdAsync(ComputerEditInputModel model, string creatorId, string imagePath)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<T>> GetAllAsync<T>(int page, int itemsPerPage)
         {
             var items = await computerRepository

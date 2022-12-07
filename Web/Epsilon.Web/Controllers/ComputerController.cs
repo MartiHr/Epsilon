@@ -114,7 +114,53 @@ namespace Epsilon.Web.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var inputModel = await computerService.GetByIdAsync<ComputerEditInputModel>(id);
+
+            await DecorateComputerEditInputModel(inputModel);
+
+            return View(inputModel);
+
+            try
+            {
+                
+            }
+            catch (Exception e)
+            {
+                TempData[GlobalConstants.ErrorMessage] = e.Message;
+                return RedirectToAction(nameof(All));
+            }
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    try
+        //    {
+        //        var computer = await computerService.GetByIdAsync<ComputerEditInputModel>(id);
+
+        //        return View(computer);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        TempData[GlobalConstants.ErrorMessage] = e.Message;
+        //        return RedirectToAction(nameof(All));
+        //    }
+        //}
+
         private async Task DecorateComputerCreateInputModel(ComputerCreateInputModel model)
+        {
+            // TODO: extract logic elsewhere
+            model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
+            model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+            model.GPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU");
+            model.CPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("CPU");
+            model.Storages = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("Storage");
+        }
+
+        private async Task DecorateComputerEditInputModel(ComputerEditInputModel model)
         {
             // TODO: extract logic elsewhere
             model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();

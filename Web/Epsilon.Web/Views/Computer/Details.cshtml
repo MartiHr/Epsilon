@@ -29,6 +29,8 @@
     </button>
 </div>*@
 
+<a asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-primary btn-lg">Edit (potentially REMOVE)</a>
+
 <div class="container px-4 px-lg-5 my-5 d-flex justify-content-between">
     <div id="carouselExampleControls" class="carousel carousel-dark slide col-md-6">
         <div class="carousel-inner h-100 d-flex align-items-center">
@@ -53,17 +55,34 @@
     </div>
     @*<div class="row gx-4 gx-lg-5 align-items-center">*@
     <div class="col-md-5 align-items-center">
-        <div class="small mb-1">@Model.Manufacturer: @Model.Model</div>
+        <div class="small mb-1">
+            @Model.Manufacturer: @Model.Model  
+            <span class="badge bg-info">@Model.Category</span>
+        </div>
         <h1 class="display-5 fw-bolder">@Model.DisplayName</h1>
         <div class="fs-5 mb-5">
             @*<span class="text-decoration-line-through">$45.00</span>*@
             <span>$@Model.Price.ToString("f2")</span>
         </div>
         <div class="mb-5">
-            <ul class="list-group">
+           @* <ul class="list-group">
                 <li class="list-group-item">@Model.CPU.Model</li>
                 <li class="list-group-item">@Model.GPU.Model</li>
                 <li class="list-group-item">@Model.Storage.Model</li>
+            </ul>*@
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Model.CPU.Model
+                    <span class="badge bg-primary rounded-pill">CPU</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Model.GPU.Model
+                    <span class="badge bg-primary rounded-pill">GPU</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Model.Storage.Model
+                    <span class="badge bg-primary rounded-pill">Storage</span>
+                </li>
             </ul>
         </div>
         <div class="lead text-break mb-3">@Model.Description</div>
