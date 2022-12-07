@@ -10,11 +10,13 @@ using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Computer;
 using Epsilon.Web.ViewModels.Manufacturer;
 using Epsilon.Web.ViewModels.Part;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Epsilon.Web.Controllers
 {
+    [Authorize]
     public class ComputerController : BaseController
     {
         private readonly IComputerService computerService;
@@ -117,15 +119,13 @@ namespace Epsilon.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var inputModel = await computerService.GetByIdAsync<ComputerEditInputModel>(id);
-
-            await DecorateComputerEditInputModel(inputModel);
-
-            return View(inputModel);
-
             try
             {
-                
+                var inputModel = await computerService.GetByIdAsync<ComputerEditInputModel>(id);
+
+                await DecorateComputerEditInputModel(inputModel);
+
+                return View(inputModel);
             }
             catch (Exception e)
             {

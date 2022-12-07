@@ -61,6 +61,6 @@ namespace Epsilon.Web.ViewModels.Computer
         public IEnumerable<PartDropdownViewModel> Storages { get; set; } = new List<PartDropdownViewModel>();
 
         [AllowedExtensionsForCollection(new string[] { GlobalConstants.PNGExtension, GlobalConstants.JPGExtension, GlobalConstants.JPEGExtension })]
-        public ICollection<IFormFile> Imagess { get; set; }
+        public ICollection<IFormFile> Images { get; set; }
     }
 }

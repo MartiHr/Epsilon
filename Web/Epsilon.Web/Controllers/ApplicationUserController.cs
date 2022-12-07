@@ -18,11 +18,11 @@ namespace Epsilon.Web.Controllers
         private readonly ICustomerService customerService;
         private readonly IEditorService editorService;
 
-        public ApplicationUserController
-            (UserManager<ApplicationUser> _userManager,
-            SignInManager<ApplicationUser> _signInManager,
-            ICustomerService _customerService,
-            IEditorService _editorService)
+        public ApplicationUserController(
+                UserManager<ApplicationUser> _userManager,
+                SignInManager<ApplicationUser> _signInManager,
+                ICustomerService _customerService,
+                IEditorService _editorService)
         {
             userManager = _userManager;
             signInManager = _signInManager;

@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Epsilon.Common\Epsilon.Common.csproj" />
+    <ProjectReference Include="..\..\Services\Epsilon.Services.Data\Epsilon.Services.Data.csproj" />
     <ProjectReference Include="..\Epsilon.Data.Common\Epsilon.Data.Common.csproj" />
     <ProjectReference Include="..\Epsilon.Data.Models\Epsilon.Data.Models.csproj" />
   </ItemGroup>

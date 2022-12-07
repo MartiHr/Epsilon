@@ -38,6 +38,8 @@ namespace Epsilon.Data
 
         public DbSet<Image> Images { get; set; }
 
+        public DbSet<Editor> Editors { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
