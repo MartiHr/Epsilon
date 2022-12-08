@@ -8,6 +8,8 @@ namespace Epsilon.Web.ViewModels.Category
 {
     public class CategoryInListViewModel : IMapFrom<CategoryModel>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public int ComputersCount { get; set; }

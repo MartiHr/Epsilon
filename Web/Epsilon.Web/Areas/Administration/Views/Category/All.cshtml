@@ -1,12 +1,44 @@
-﻿@model Cat
+﻿@model CategoryListViewModel
 
 @{
     ViewData["Title"] = "All categories";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
-@foreach (var category in @Model.Category)
-{
-    
-}
+<hr />
+
+<a asp-area="Administration" asp-controller="Category" asp-action="Create" class="btn btn-success mb-3"><i class="fa-solid fa-plus"></i> Create</a>
+
+<table class="table table-dark table-striped table-hover text-center">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Computers Count</th>
+            <th scope="col">Creation Date</th>
+            <th scope="col">Last modified</th>
+            <th scope="col">Is Deleted</th>
+            <th scope="col">Controls</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in @Model.Categories)
+        {
+            <tr class="align-middle">
+                <td>@category.Name</td>
+                <td>@category.ComputersCount</td>
+                <td>@category.CreatedOn</td>
+                <td>@(category.ModifiedOn == null ? "Not modified" : category.ModifiedOn)</td>
+                <td>@category.IsDeleted</td>
+                <td>
+                    <a asp-area="Administration" asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-sm btn-warning">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a class="btn btn-sm btn-danger">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-
+using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +7,22 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 {
     public class CategoryController : AdministrationController
     {
-        public IActionResult All()
+        private readonly ICategoryService categoriesService;
+
+        public CategoryController(ICategoryService _categoriesService)
         {
-            return View();
+            categoriesService = _categoriesService;
+        }
+
+        public async Task<IActionResult> All()
+        {
+            // TODO: implement pagination
+            var model = new CategoryListViewModel()
+            {
+                Categories = await categoriesService.GetAllAsync<CategoryInListViewModel>(),
+            };
+
+            return View(model);
         }
 
         [HttpGet]
