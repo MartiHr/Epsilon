@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Epsilon.Web.Areas.Administration.Controllers
 {
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.ModeratorRoleName}")]
     [Area("Administration")]
     public class AdministrationController : BaseController
     {

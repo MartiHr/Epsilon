@@ -4,42 +4,19 @@
     ViewData["Title"] = "Details";
 }
 
-
 <h1>@Model.Name</h1>
-
-@*<div id="carouselExampleControls" class="carousel carousel-dark slide col-md-6" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="@Model.ImageUrls.First()" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="@Model.ImageUrls.Skip(1).First()" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="@Model.ImageUrls.First()" class="d-block w-100" alt="...">
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon text-black" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>*@
 
 <a asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-primary btn-lg">Edit (potentially REMOVE)</a>
 
 <div class="container px-4 px-lg-5 my-5 d-flex justify-content-between">
     <div id="carouselExampleControls" class="carousel carousel-dark slide col-md-6">
         <div class="carousel-inner h-100 d-flex align-items-center">
-            @foreach (var imgageUrl in @Model.ImageUrls)
+            @foreach (var imageUrl in Model.ImageUrls)
             {
-                <div class="carousel-item">
-                    <img src="@imgageUrl" class="d-block mb-5 mb-md-0 w-100" data-bs-interval="false" alt="...">
+                <div class="carousel-item @(imageUrl == Model.ImageUrls.FirstOrDefault() ? "active" : string.Empty)">
+                    <img src="@imageUrl" class="d-block mb-5 mb-md-0 w-100" data-bs-interval="false" alt="...">
                 </div>
-            }         
+            }
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
