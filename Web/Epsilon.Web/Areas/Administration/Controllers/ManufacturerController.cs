@@ -95,5 +95,23 @@ namespace Epsilon.Web.Areas.Administration.Controllers
                 return View(inputModel);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await manufacturerService.DeleteByIdAsync(id);
+
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+                // TODO: extract success, error and other messages into constants
+                ModelState.AddModelError(string.Empty, "Something went wrong while editing");
+
+                return RedirectToAction(nameof(All));
+            }
+        }
     }
 }
