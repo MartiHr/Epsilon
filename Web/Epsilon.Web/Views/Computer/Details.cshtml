@@ -2,11 +2,16 @@
 
 @{
     ViewData["Title"] = "Details";
+    ViewData["Controller"] = "Computer";
+    ViewData["Id"] = Model.Id;
 }
 
-<h1>@Model.Name</h1>
+<a asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-warning btn-lg">Edit <i class="fa-solid fa-pen-to-square"></i></a>
+<button class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+   Delete <i class="fa-solid fa-trash"></i>
+</button>
 
-<a asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-primary btn-lg">Edit (potentially REMOVE)</a>
+<partial name="_DeleteModalPartial" view-data="ViewData" />
 
 <div class="container px-4 px-lg-5 my-5 d-flex justify-content-between">
     <div id="carouselExampleControls" class="carousel carousel-dark slide col-md-6">
