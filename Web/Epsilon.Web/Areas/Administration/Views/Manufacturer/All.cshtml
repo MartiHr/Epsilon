@@ -1,0 +1,53 @@
+﻿@model ManufacturerListViewModel
+
+@{
+    ViewData["Title"] = "All manufacturers";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<hr />
+
+<a asp-area="Administration" asp-controller="Manufacturer" asp-action="Create" class="btn btn-success mb-3"><i class="fa-solid fa-plus"></i> Create</a>
+
+<table class="table table-dark table-striped table-hover text-center">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Country</th>
+            <th scope="col">Computers Count</th>
+            <th scope="col">Parts Count</th>
+            <th scope="col">Creation Date</th>
+            <th scope="col">Last modified</th>
+            <th scope="col">Is Deleted</th>
+            <th scope="col">Controls</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var manufacturer in @Model.Manufacturers)
+        {
+            <tr class="align-middle">
+                <td>@manufacturer.Name</td>
+                <td>@manufacturer.Country</td>
+                <td>@manufacturer.ComputersCount</td>
+                <td>@manufacturer.PartsCount</td>
+                <td>@manufacturer.CreatedOn</td>
+                <td>@(manufacturer.ModifiedOn == null ? "not modified" : manufacturer.ModifiedOn)</td>
+                <td>@manufacturer.IsDeleted</td>
+                <td>
+                    <div class="d-flex justify-content-evenly">
+                        <a asp-area="Administration" asp-action="Edit" asp-route-id="@manufacturer.Id" class="btn btn-sm btn-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <form asp-area="Administration" asp-action="Delete" asp-route-id="@manufacturer.Id">
+                            <input type="hidden" value="@manufacturer.Id">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
