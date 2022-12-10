@@ -32,6 +32,22 @@ namespace Epsilon.Services.Data
             await categoriesRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteByIdAsync(int categoryId)
+        {
+            var dbCategory = await categoriesRepository
+                .All()
+                .Where(c => c.Id == categoryId)
+                .FirstOrDefaultAsync();
+
+            if (dbCategory == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            categoriesRepository.Delete(dbCategory);
+            await categoriesRepository.SaveChangesAsync();
+        }
+
         public async Task EditByIdAsync(CategoryEditInputModel inputModel, string creatorId)
         {
             // TODO: possibly add creator to category
@@ -52,6 +68,15 @@ namespace Epsilon.Services.Data
         }
 
         public async Task<List<T>> GetAllAsync<T>()
+        {
+            return await categoriesRepository
+                .AllAsNoTracking()
+                .OrderBy(c => c.Name)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<List<T>> GetAllWithDeletedAsync<T>()
         {
             return await categoriesRepository
                 .AllAsNoTrackingWithDeleted()

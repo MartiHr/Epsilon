@@ -45,10 +45,11 @@
 
         public static class Manufacturer
         {
+            public const int ManufacturerNameMinLength = 3;
             public const int ManufacturerNameMaxLength = 50;
 
+            public const int ManufacturerCountryMinLength = 3;
             public const int ManufacturerCountryMaxLength = 60;
-
         }
 
         public static class Order
