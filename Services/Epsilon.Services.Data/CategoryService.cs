@@ -32,6 +32,23 @@ namespace Epsilon.Services.Data
             await categoriesRepository.SaveChangesAsync();
         }
 
+        public async Task EditByIdAsync(CategoryEditInputModel model, string creatorId)
+        {
+            // TODO: possibly add creator to category
+            var category = await categoriesRepository
+                .All()
+                .Where(c => c.Id == model.Id)
+                .FirstOrDefaultAsync();
+
+            if (category == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            category.Name = model.Name;
+            await categoriesRepository.SaveChangesAsync();
+        }
+
         public async Task<List<T>> GetAllAsync<T>()
         {
             return await categoriesRepository

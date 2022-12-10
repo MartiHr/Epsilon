@@ -86,9 +86,10 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
                 return RedirectToAction(nameof(All));
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, e.Message);
+                // TODO: extract success, error and other messages into constants
+                ModelState.AddModelError(string.Empty, "Something went wrong when editing");
 
                 return View(inputModel);
             }
