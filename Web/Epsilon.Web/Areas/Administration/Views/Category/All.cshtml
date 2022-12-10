@@ -28,15 +28,23 @@
                 <td>@category.Name</td>
                 <td>@category.ComputersCount</td>
                 <td>@category.CreatedOn</td>
-                <td>@(category.ModifiedOn == null ? "Not modified" : category.ModifiedOn)</td>
+                <td>@(category.ModifiedOn == null ? "not modified" : category.ModifiedOn)</td>
                 <td>@category.IsDeleted</td>
                 <td>
-                    <a asp-area="Administration" asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-sm btn-warning">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    <a class="btn btn-sm btn-danger">
+                    <div class="d-flex justify-content-evenly">
+                        <a asp-area="Administration" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-sm btn-warning">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <form asp-area="Administration" asp-action="Delete" asp-route-id="@category.Id">
+                            <input type="hidden" value="@category.Id">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                   @* <a asp-area="Administration" asp-action="Delete" asp-route-id="@category.Id" class="btn btn-sm btn-danger">
                         <i class="fa-solid fa-trash"></i>
-                    </a>
+                    </a>*@
                 </td>
             </tr>
         }

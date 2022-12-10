@@ -7,7 +7,5 @@ namespace Epsilon.Web.ViewModels.Category
         //// TODO: implement paging
 
         public IEnumerable<CategoryInListViewModel> Categories { get; set; } = new List<CategoryInListViewModel>();
-
-        public int? DeleteId { get; set; }
     }
 }

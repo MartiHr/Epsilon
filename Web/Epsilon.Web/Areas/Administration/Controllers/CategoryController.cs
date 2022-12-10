@@ -58,11 +58,11 @@ namespace Epsilon.Web.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             try
             {
-                var inputModel = categoriesService.GetOneByIdAsync<CategoryEditInputModel>(id);
+                var inputModel = await categoriesService.GetOneByIdAsync<CategoryEditInputModel>(id);
 
                 return View(inputModel);
             }
