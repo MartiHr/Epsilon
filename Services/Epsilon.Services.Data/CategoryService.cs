@@ -1,12 +1,14 @@
-﻿using Epsilon.Data.Common.Repositories;
-using Epsilon.Data.Models;
-using Epsilon.Services.Data.Contracts;
-using Epsilon.Services.Mapping;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Epsilon.Data.Common.Repositories;
+using Epsilon.Data.Models;
+using Epsilon.Services.Data.Contracts;
+using Epsilon.Services.Mapping;
+using Epsilon.Web.ViewModels.Category;
+using Microsoft.EntityFrameworkCore;
 
 namespace Epsilon.Services.Data
 {
@@ -19,18 +21,33 @@ namespace Epsilon.Services.Data
             categoriesRepository = _categoriesRepository;
         }
 
-        public Task CreateAsync(string categoryName)
+        public async Task CreateAsync(CategoryCreateInputModel inputModel, string creatorId)
         {
-            throw new NotImplementedException();
+            var category = new Category()
+            {
+                Name = inputModel.Name,
+            };
+
+            await categoriesRepository.AddAsync(category);
+            await categoriesRepository.SaveChangesAsync();
         }
 
         public async Task<List<T>> GetAllAsync<T>()
         {
             return await categoriesRepository
-                .AllAsNoTracking()
+                .AllAsNoTrackingWithDeleted()
                 .OrderBy(c => c.Name)
                 .To<T>()
                 .ToListAsync();
+        }
+
+        public async Task<T> GetOneByIdAsync<T>(int id)
+        {
+            return await categoriesRepository
+                .AllAsNoTracking()
+                .Where(c => c.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
         }
     }
 }

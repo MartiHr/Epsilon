@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Epsilon.Services.Data.Contracts;
+using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,13 +30,68 @@ namespace Epsilon.Web.Areas.Administration.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var inputModel = new CategoryCreateInputModel();
+
+            return View(inputModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CategoryCreateInputModel model)
+        public async Task<IActionResult> Create(CategoryCreateInputModel inputModel)
         {
-            return View();
+            if (!this.ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            try
+            {
+                await categoriesService.CreateAsync(inputModel, User.Id());
+
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(string.Empty, e.Message);
+
+                return View(inputModel);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            try
+            {
+                var inputModel = categoriesService.GetOneByIdAsync<CategoryEditInputModel>(id);
+
+                return View(inputModel);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(All));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(CategoryEditInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            try
+            {
+                await categoriesService.EditByIdAsync(inputModel, User.Id());
+
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(string.Empty, e.Message);
+
+                return View(inputModel);
+            }
         }
     }
 }

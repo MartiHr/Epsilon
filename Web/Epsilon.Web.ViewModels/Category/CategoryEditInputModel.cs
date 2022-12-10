@@ -8,8 +8,10 @@ using CategoryModel = Epsilon.Data.Models.Category;
 
 namespace Epsilon.Web.ViewModels.Category
 {
-    public class CategoryCreateInputModel : IMapFrom<CategoryModel>
+    public class CategoryEditInputModel : IMapFrom<CategoryModel>
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(CategoryNameMaxLength, MinimumLength = CategoryNameMinLength)]
         public string Name { get; set; }

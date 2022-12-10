@@ -16,6 +16,7 @@
 
         public static class Category
         {
+            public const int CategoryNameMinLength = 5;
             public const int CategoryNameMaxLength = 50;
         }
 
