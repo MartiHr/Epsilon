@@ -1,10 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using Epsilon.Services.Mapping;
+
 using static Epsilon.Data.Common.DataValidation.Manufacturer;
+
+using ManufacturerModel = Epsilon.Data.Models.Manufacturer;
 
 namespace Epsilon.Web.ViewModels.Manufacturer
 {
-    public class ManufacturerEditInputModel
+    public class ManufacturerEditInputModel : IMapFrom<ManufacturerModel>
     {
         public int Id { get; set; }
 

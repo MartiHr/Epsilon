@@ -7,10 +7,8 @@ using Epsilon.Data.Common.Repositories;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Services.Mapping;
-using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Manufacturer;
 using Microsoft.EntityFrameworkCore;
-using static Epsilon.Data.Common.DataValidation;
 
 namespace Epsilon.Services.Data
 {
@@ -39,7 +37,7 @@ namespace Epsilon.Services.Data
         {
             var manufacturer = await manufacturerRepository
                .All()
-               .Where(c => c.Id == manufacturerId)
+               .Where(m => m.Id == manufacturerId)
                .FirstOrDefaultAsync();
 
             if (manufacturer == null)
@@ -55,7 +53,7 @@ namespace Epsilon.Services.Data
         {
             var manufacturer = await manufacturerRepository
                 .All()
-                .Where(c => c.Id == model.Id)
+                .Where(m => m.Id == model.Id)
                 .FirstOrDefaultAsync();
 
             if (manufacturer == null)
@@ -92,7 +90,7 @@ namespace Epsilon.Services.Data
         {
             return await manufacturerRepository
                 .AllAsNoTracking()
-                .Where(c => c.Id == id)
+                .Where(m => m.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
         }

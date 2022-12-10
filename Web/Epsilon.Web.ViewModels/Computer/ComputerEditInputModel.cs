@@ -15,7 +15,7 @@ using ComputerModel = Epsilon.Data.Models.Computer;
 
 namespace Epsilon.Web.ViewModels.Computer
 {
-    public class ComputerEditInputModel : IMapFrom<ComputerModel>
+    public class ComputerEditInputModel : IMapFrom<ComputerModel>, IHaveCustomMappings
     {
         [Required]
         public int Id { get; set; }
@@ -62,5 +62,11 @@ namespace Epsilon.Web.ViewModels.Computer
 
         [AllowedExtensionsForCollection(new string[] { GlobalConstants.PNGExtension, GlobalConstants.JPGExtension, GlobalConstants.JPEGExtension })]
         public ICollection<IFormFile> Images { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<ComputerModel, ComputerEditInputModel>()
+             .ForMember(x => x.Images, opt => opt.Ignore());
+        }
     }
 }

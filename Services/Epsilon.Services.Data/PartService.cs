@@ -48,5 +48,14 @@ namespace Epsilon.Services.Data
                 .To<T>()
                 .ToListAsync();
         }
+
+        public async Task<List<T>> GetAllWithDeletedAsync<T>()
+        {
+            return await partRepository
+                .AllAsNoTrackingWithDeleted()
+                .OrderByDescending(p => p.CreatedOn)
+                .To<T>()
+                .ToListAsync();
+        }
     }
 }
