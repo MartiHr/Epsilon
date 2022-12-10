@@ -1,28 +1,28 @@
-﻿using System;
-using System.Threading.Tasks;
-using Epsilon.Common;
-using Epsilon.Services.Data.Contracts;
+﻿using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.Category;
+using Epsilon.Web.ViewModels.Manufacturer;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Epsilon.Web.Areas.Administration.Controllers
 {
-    public class CategoryController : AdministrationController
+    public class ManufacturerController : AdministrationController
     {
-        private readonly ICategoryService categoriesService;
+        private readonly IManufacturerService manufacturerService;
 
-        public CategoryController(ICategoryService _categoriesService)
+        public ManufacturerController(IManufacturerService _manufacturerService)
         {
-            categoriesService = _categoriesService;
+            manufacturerService = _manufacturerService;
         }
 
         public async Task<IActionResult> All()
         {
             // TODO: implement pagination
-            var model = new CategoryListViewModel()
+            var model = new ManufacturerListViewModel()
             {
-                Categories = await categoriesService.GetAllWithDeletedAsync<CategoryInListViewModel>(),
+                Manufacturers = await manufacturerService.GetAllWithDeletedAsync<ManufacturerInListViewModel>(),
             };
 
             return View(model);
@@ -31,13 +31,13 @@ namespace Epsilon.Web.Areas.Administration.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var inputModel = new CategoryCreateInputModel();
+            var inputModel = new ManufacturerCreateInputModel();
 
             return View(inputModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CategoryCreateInputModel inputModel)
+        public async Task<IActionResult> Create(ManufacturerCreateInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -46,7 +46,7 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
             try
             {
-                await categoriesService.CreateAsync(inputModel, User.Id());
+                await manufacturerService.CreateAsync(inputModel, User.Id());
 
                 return RedirectToAction(nameof(All));
             }
@@ -63,7 +63,7 @@ namespace Epsilon.Web.Areas.Administration.Controllers
         {
             try
             {
-                var inputModel = await categoriesService.GetOneByIdAsync<CategoryEditInputModel>(id);
+                var inputModel = await manufacturerService.GetOneByIdAsync<ManufacturerEditInputModel>(id);
 
                 return View(inputModel);
             }
@@ -74,7 +74,7 @@ namespace Epsilon.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(CategoryEditInputModel inputModel)
+        public async Task<IActionResult> Edit(ManufacturerEditInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
             try
             {
-                await categoriesService.EditByIdAsync(inputModel, User.Id());
+                await manufacturerService.EditByIdAsync(inputModel, User.Id());
 
                 return RedirectToAction(nameof(All));
             }
@@ -93,24 +93,6 @@ namespace Epsilon.Web.Areas.Administration.Controllers
                 ModelState.AddModelError(string.Empty, "Something went wrong while editing");
 
                 return View(inputModel);
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                await categoriesService.DeleteByIdAsync(id);
-
-                return RedirectToAction(nameof(All));
-            }
-            catch (Exception)
-            {
-                // TODO: extract success, error and other messages into constants
-                ModelState.AddModelError(string.Empty, "Something went wrong while editing");
-
-                return RedirectToAction(nameof(All));
             }
         }
     }
