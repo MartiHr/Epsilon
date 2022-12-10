@@ -9,6 +9,8 @@ namespace Epsilon.Web.ViewModels.Part
 {
     public class PartInListViewModel : IMapFrom<PartModel>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         public string Type { get; set; }
 
         public string Model { get; set; }

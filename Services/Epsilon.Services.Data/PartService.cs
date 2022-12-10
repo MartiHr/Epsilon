@@ -53,7 +53,8 @@ namespace Epsilon.Services.Data
         {
             return await partRepository
                 .AllAsNoTrackingWithDeleted()
-                .OrderByDescending(p => p.CreatedOn)
+                .OrderBy(p => p.Type)
+                .ThenByDescending(p => p.CreatedOn)
                 .To<T>()
                 .ToListAsync();
         }
