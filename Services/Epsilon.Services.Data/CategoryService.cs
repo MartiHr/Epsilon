@@ -32,20 +32,22 @@ namespace Epsilon.Services.Data
             await categoriesRepository.SaveChangesAsync();
         }
 
-        public async Task EditByIdAsync(CategoryEditInputModel model, string creatorId)
+        public async Task EditByIdAsync(CategoryEditInputModel inputModel, string creatorId)
         {
             // TODO: possibly add creator to category
-            var category = await categoriesRepository
+            var dbCategory = await categoriesRepository
                 .All()
-                .Where(c => c.Id == model.Id)
+                .Where(c => c.Id == inputModel.Id)
                 .FirstOrDefaultAsync();
 
-            if (category == null)
+            if (dbCategory == null)
             {
                 throw new ArgumentNullException();
             }
 
-            category.Name = model.Name;
+            dbCategory.Name = inputModel.Name;
+
+            categoriesRepository.Update(dbCategory);
             await categoriesRepository.SaveChangesAsync();
         }
 
