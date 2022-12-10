@@ -9,6 +9,10 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Administration\Views\Category\Edit.cshtml" />
+  </ItemGroup>
 	<ItemGroup>
 		<AdditionalFiles Include="..\..\stylecop.json" />
 	</ItemGroup>
@@ -48,5 +52,17 @@
   <ItemGroup>
     <Folder Include="Areas\Administration\Views\Dashboard\" />
     <Folder Include="wwwroot\lib\toastr\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Administration\Views\Category\Edit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Administration\Views\Category\Edit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Administration\Views\Category\Edit.cshtml" />
   </ItemGroup>
 </Project>
