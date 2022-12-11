@@ -58,10 +58,13 @@
 
         public static class Part
         {
+            public const int PartTypeMinLength = 3;
             public const int PartTypeMaxLength = 50;
 
+            public const int PartModelMinLength = 5;
             public const int PartModelMaxLength = 60;
 
+            public const int PartDescriptionMinLength = 20;
             public const int PartDescriptionMaxLength = 500;
         }
 

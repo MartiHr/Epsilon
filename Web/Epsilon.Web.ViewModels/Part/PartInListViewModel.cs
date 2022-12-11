@@ -33,7 +33,9 @@ namespace Epsilon.Web.ViewModels.Part
         {
             configuration.CreateMap<PartModel, PartInListViewModel>()
               .ForMember(x => x.ComputersCount, opt =>
-                  opt.MapFrom(p => p.Computers.Count));
+                  opt.MapFrom(p => p.Computers.Count))
+              .ForMember(x => x.Manufacturer, opt =>
+                  opt.MapFrom(p => p.Manufacturer.Name));
         }
     }
 }
