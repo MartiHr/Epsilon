@@ -136,21 +136,47 @@ namespace Epsilon.Web.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(int id)
-        //{
-        //    try
-        //    {
-        //        var computer = await computerService.GetByIdAsync<ComputerEditInputModel>(id);
+        [HttpPost]
+        public async Task<IActionResult> Edit(ComputerEditInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                await DecorateComputerEditInputModel(inputModel);
 
-        //        return View(computer);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        TempData[GlobalConstants.ErrorMessage] = e.Message;
-        //        return RedirectToAction(nameof(All));
-        //    }
-        //}
+                return View(inputModel);
+            }
+
+            try
+            {
+                var creatorId = await editorService.GetEditorIdAsync(User.Id());
+
+                await computerService.EditByIdAsync(inputModel, creatorId, $"{hostEnvironment.WebRootPath}/images");
+
+                // return RedirectToAction(nameof(All));
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception e)
+            {
+                TempData[GlobalConstants.ErrorMessage] = e.Message;
+                ModelState.AddModelError(string.Empty, e.Message);
+
+                await DecorateComputerEditInputModel(inputModel);
+
+                return View(inputModel);
+            }
+
+            //try
+            //{
+            //    var computer = await computerService.GetByIdAsync<ComputerEditInputModel>(id);
+
+            //    return View(computer);
+            //}
+            //catch (Exception e)
+            //{
+            //    TempData[GlobalConstants.ErrorMessage] = e.Message;
+            //    return RedirectToAction(nameof(All));
+            //}
+        }
 
         private async Task DecorateComputerCreateInputModel(ComputerCreateInputModel model)
         {

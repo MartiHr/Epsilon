@@ -1,4 +1,5 @@
-﻿@model ComputerDetailsViewModel
+﻿@using Epsilon.Common
+@model ComputerDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -6,10 +7,13 @@
     ViewData["Id"] = Model.Id;
 }
 
-<a asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-warning btn-lg">Edit <i class="fa-solid fa-pen-to-square"></i></a>
-<button class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-   Delete <i class="fa-solid fa-trash"></i>
-</button>
+@if (User.IsInRole(GlobalConstants.AdministratorRoleName) || User.IsInRole(GlobalConstants.ModeratorRoleName))
+{
+    <a asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-warning btn-lg">Edit <i class="fa-solid fa-pen-to-square"></i></a>
+    <button class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Delete <i class="fa-solid fa-trash"></i>
+    </button>
+}
 
 <partial name="_DeleteModalPartial" view-data="ViewData" />
 
@@ -35,7 +39,7 @@
     @*<div class="row gx-4 gx-lg-5 align-items-center">*@
     <div class="col-md-5 align-items-center">
         <div class="small mb-1">
-            @Model.Manufacturer: @Model.Model  
+            @Model.Manufacturer: @Model.Model
             <span class="badge bg-info">@Model.Category</span>
         </div>
         <h1 class="display-5 fw-bolder">@Model.DisplayName</h1>
@@ -69,7 +73,7 @@
     </div>
     @*</div>*@
 </div>
-        @*</section>*@
+@*</section>*@
 <!-- Related items section-->
 <section class="py-5 bg-light">
     <div class="container px-4 px-lg-5 mt-5">

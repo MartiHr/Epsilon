@@ -19,6 +19,8 @@ namespace Epsilon.Services.Data.Contracts
 
         Task AssignComputerToExistingPartAsync(Computer computer, int partId);
 
+        Task RemoveComputerFromExistingPartAsync(Computer computer, int partId);
+
         Task CreateAsync(PartCreateInputModel inputModel, string creatorId);
 
         Task EditByIdAsync(PartEditInputModel model, string creatorId);

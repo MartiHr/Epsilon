@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Epsilon.Data.Models;
 using Epsilon.Web.ViewModels.Computer;
 
 namespace Epsilon.Services.Data.Contracts
@@ -9,6 +9,8 @@ namespace Epsilon.Services.Data.Contracts
     {
         // TODO: implement
         Task<List<T>> GetAllAsync<T>(int page, int itemsPerPage);
+
+        Task<Computer> GetOneByIdAsync(int id);
 
         Task CreateAsync(ComputerCreateInputModel model, string creatorId, string imagePath);
 

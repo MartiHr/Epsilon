@@ -18,12 +18,15 @@ namespace Epsilon.Services.Data
     {
         private readonly IDeletableEntityRepository<Computer> computerRepository;
         private readonly IPartService partService;
+        private readonly IImageService imageService;
 
         public ComputerService(IDeletableEntityRepository<Computer> _computerRepository,
-            IPartService _partService)
+            IPartService _partService,
+            IImageService _imageService)
         {
             computerRepository = _computerRepository;
             partService = _partService;
+            imageService = _imageService;
         }
 
         public async Task CreateAsync(ComputerCreateInputModel model, string creatorId, string imagePath)
@@ -80,9 +83,65 @@ namespace Epsilon.Services.Data
             }
         }
 
-        public Task EditByIdAsync(ComputerEditInputModel model, string creatorId, string imagePath)
+        public async Task EditByIdAsync(ComputerEditInputModel model, string creatorId, string imagePath)
         {
-            throw new NotImplementedException();
+            var computer = await GetOneByIdAsync(model.Id);
+
+            if (model.Images.Count > 0)
+            {
+                foreach (var image in computer.Images)
+                {
+                    await imageService.DeleteImageByIdAsync(image.Id);
+                }
+
+                Directory.CreateDirectory($"{imagePath}/computers/");
+                foreach (var image in model.Images)
+                {
+                    string extension = Path.GetExtension(image.FileName);
+
+                    var imageModel = new Image()
+                    {
+                        CreatorId = creatorId,
+                        Computer = computer,
+                        Extension = extension,
+                    };
+
+                    computer.Images.Add(imageModel);
+
+                    string physicalPath = $"{imagePath}/computers/{imageModel.Id}{extension}";
+
+                    using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                    await image.CopyToAsync(fileStream);
+                }
+            }
+
+            computer.Name = model.Name;
+            computer.Model = model.Model;
+            computer.Price = model.Price;
+            computer.Description = model.Description;
+            computer.CategoryId = model.CategoryId;
+            computer.CreatorId = creatorId;
+            computer.ManufacturerId = model.ManufacturerId;
+
+            computerRepository.Update(computer);
+            await computerRepository.SaveChangesAsync();
+
+            foreach (var part in computer.Parts)
+            {
+                await partService.RemoveComputerFromExistingPartAsync(computer, part.Id);
+            }
+
+            var partIds = new int[]
+            {
+                model.GPUId,
+                model.CPUId,
+                model.StorageId,
+            };
+
+            foreach (var partId in partIds)
+            {
+                await partService.AssignComputerToExistingPartAsync(computer, partId);
+            }
         }
 
         public async Task<List<T>> GetAllAsync<T>(int page, int itemsPerPage)
@@ -119,6 +178,15 @@ namespace Epsilon.Services.Data
             return computerRepository
                 .AllAsNoTracking()
                 .Count();
+        }
+
+        public async Task<Computer> GetOneByIdAsync(int id)
+        {
+            return await computerRepository
+                .All()
+                .Where(c => c.Id == id)
+                .Include(c => c.Parts)
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -120,5 +120,16 @@ namespace Epsilon.Services.Data
                 .To<T>()
                 .FirstOrDefaultAsync();
         }
+
+        public async Task RemoveComputerFromExistingPartAsync(Computer computer, int partId)
+        {
+            var part = await partRepository
+                .All()
+                .Where(p => p.Id == partId)
+                .FirstOrDefaultAsync();
+
+            part.Computers.Remove(computer);
+            await partRepository.SaveChangesAsync();
+        }
     }
 }
