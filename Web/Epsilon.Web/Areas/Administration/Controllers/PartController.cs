@@ -68,5 +68,41 @@ namespace Epsilon.Web.Areas.Administration.Controllers
                 return View(inputModel);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                var inputModel = await partService.GetOneByIdAsync<PartEditInputModel>(id);
+                inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+
+                return View(inputModel);
+            }
+            catch (Exception e)
+            {
+                inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+
+                return RedirectToAction(nameof(All));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await manufacturerService.DeleteByIdAsync(id);
+
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+                // TODO: extract success, error and other messages into constants
+                ModelState.AddModelError(string.Empty, "Something went wrong while editing");
+
+                return RedirectToAction(nameof(All));
+            }
+        }
     }
 }

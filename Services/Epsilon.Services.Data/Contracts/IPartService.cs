@@ -12,6 +12,8 @@ namespace Epsilon.Services.Data.Contracts
 
         Task<List<T>> GetAllOfTypeAsync<T>(string type);
 
+        Task<T> GetOneByIdAsync<T>(int id);
+
         Task<List<T>> GetAllWithDeletedAsync<T>();
 
         Task AssignComputerToExistingPartAsync(Computer computer, int partId);

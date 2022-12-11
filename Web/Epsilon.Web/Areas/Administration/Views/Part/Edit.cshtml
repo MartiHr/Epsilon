@@ -1,0 +1,49 @@
+﻿@model PartEditInputModel
+
+@{
+    ViewData["Title"] = "Edit part";
+}
+
+<div class="form-body h-100">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>@ViewData["Title"]</h3>
+                    <p>Fill in the data below.</p>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form asp-action="Edit" method="post" class="mb-3 mt-md-4" enctype="multipart/form-data">
+                        <input asp-for="@Model.Id" type="hidden" />
+                        <div class="mb-3">
+                            <label asp-for="@Model.Type" class="form-label"></label>
+                            <input asp-for="@Model.Type" class="form-control" aria-required="true" />
+                            <span asp-validation-for="@Model.Type" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.Model" class="form-label"></label>
+                            <input asp-for="@Model.Model" class="form-control" aria-required="true" />
+                            <span asp-validation-for="@Model.Model" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.Description" class="form-label"></label>
+                            <textarea asp-for="@Model.Description" class="form-control" id="description-textarea" rows="3"></textarea>
+                            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.ManufacturerId" class="form-label">Manufacturer</label>
+                            <select asp-for="@Model.ManufacturerId" class="form-control">
+                                @foreach (var manufacturer in Model.Manufacturers)
+                                {
+                                    <option value="@manufacturer.Id">@manufacturer.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input class="btn btn-primary" type="submit" value="Edit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

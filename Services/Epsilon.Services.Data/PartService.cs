@@ -74,5 +74,14 @@ namespace Epsilon.Services.Data
                 .To<T>()
                 .ToListAsync();
         }
+
+        public async Task<T> GetOneByIdAsync<T>(int id)
+        {
+            return await partRepository
+                .AllAsNoTracking()
+                .Where(p => p.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+        }
     }
 }
