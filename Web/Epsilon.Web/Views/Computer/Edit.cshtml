@@ -12,7 +12,7 @@
                     <h3>@ViewData["Title"]</h3>
                     <p>Fill in the data below.</p>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <form asp-action="Create" method="post" class="mb-3 mt-md-4" enctype="multipart/form-data">
+                    <form asp-action="Edit" method="post" class="mb-3 mt-md-4" enctype="multipart/form-data">
                         <input type="hidden" value="@Model.Id" class="form-control" />
                         <div class="mb-3">
                             <label asp-for="@Model.Name" class="form-label"></label>

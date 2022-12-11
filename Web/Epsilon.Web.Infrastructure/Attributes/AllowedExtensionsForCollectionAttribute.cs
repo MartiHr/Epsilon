@@ -19,14 +19,17 @@ public class AllowedExtensionsForCollectionAttribute : ValidationAttribute
     {
         var files = value as ICollection<IFormFile>;
 
-        foreach (var file in files)
+        if (files != null)
         {
-            if (file != null)
+            foreach (var file in files)
             {
-                var extension = Path.GetExtension(file.FileName);
-                if (!extensions.Contains(extension.ToLower()))
+                if (file != null)
                 {
-                    return new ValidationResult(GetErrorMessage(extension));
+                    var extension = Path.GetExtension(file.FileName);
+                    if (!extensions.Contains(extension.ToLower()))
+                    {
+                        return new ValidationResult(GetErrorMessage(extension));
+                    }
                 }
             }
         }

@@ -152,8 +152,7 @@ namespace Epsilon.Web.Controllers
 
                 await computerService.EditByIdAsync(inputModel, creatorId, $"{hostEnvironment.WebRootPath}/images");
 
-                // return RedirectToAction(nameof(All));
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Details), new { id = inputModel.Id });
             }
             catch (Exception e)
             {
@@ -164,18 +163,6 @@ namespace Epsilon.Web.Controllers
 
                 return View(inputModel);
             }
-
-            //try
-            //{
-            //    var computer = await computerService.GetByIdAsync<ComputerEditInputModel>(id);
-
-            //    return View(computer);
-            //}
-            //catch (Exception e)
-            //{
-            //    TempData[GlobalConstants.ErrorMessage] = e.Message;
-            //    return RedirectToAction(nameof(All));
-            //}
         }
 
         private async Task DecorateComputerCreateInputModel(ComputerCreateInputModel model)

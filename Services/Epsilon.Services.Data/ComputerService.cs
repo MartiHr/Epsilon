@@ -87,7 +87,7 @@ namespace Epsilon.Services.Data
         {
             var computer = await GetOneByIdAsync(model.Id);
 
-            if (model.Images.Count > 0)
+            if (model.Images != null && model.Images.Count > 0)
             {
                 foreach (var image in computer.Images)
                 {
@@ -186,6 +186,7 @@ namespace Epsilon.Services.Data
                 .All()
                 .Where(c => c.Id == id)
                 .Include(c => c.Parts)
+                .Include(c => c.Images)
                 .FirstOrDefaultAsync();
         }
     }
