@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using Epsilon.Services.Mapping;
 using Epsilon.Web.ViewModels.Manufacturer;
 
 using static Epsilon.Data.Common.DataValidation.Part;
 
+using PartModel = Epsilon.Data.Models.Part;
+
 namespace Epsilon.Web.ViewModels.Part
 {
-    public class PartEditInputModel
+    public class PartEditInputModel : IMapFrom<PartModel>
     {
         public int Id { get; set; }
 

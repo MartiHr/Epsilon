@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Epsilon.Data.Models;
+using Epsilon.Web.ViewModels.Manufacturer;
 using Epsilon.Web.ViewModels.Part;
 
 namespace Epsilon.Services.Data.Contracts
@@ -19,5 +20,9 @@ namespace Epsilon.Services.Data.Contracts
         Task AssignComputerToExistingPartAsync(Computer computer, int partId);
 
         Task CreateAsync(PartCreateInputModel inputModel, string creatorId);
+
+        Task EditByIdAsync(PartEditInputModel model, string creatorId);
+
+        Task DeleteByIdAsync(int partId);
     }
 }

@@ -81,9 +81,30 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             }
             catch (Exception e)
             {
-                inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+                return RedirectToAction(nameof(All));
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PartEditInputModel inputModel)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
+
+            try
+            {
+                await partService.EditByIdAsync(inputModel, User.Id());
 
                 return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+                // TODO: extract success, error and other messages into constants
+                ModelState.AddModelError(string.Empty, "Something went wrong while editing");
+
+                return View(inputModel);
             }
         }
 
@@ -92,14 +113,14 @@ namespace Epsilon.Web.Areas.Administration.Controllers
         {
             try
             {
-                await manufacturerService.DeleteByIdAsync(id);
+                await partService.DeleteByIdAsync(id);
 
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
                 // TODO: extract success, error and other messages into constants
-                ModelState.AddModelError(string.Empty, "Something went wrong while editing");
+                ModelState.AddModelError(string.Empty, "Something went wrong while deleting");
 
                 return RedirectToAction(nameof(All));
             }

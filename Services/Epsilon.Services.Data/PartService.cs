@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -6,7 +7,6 @@ using Epsilon.Data.Common.Repositories;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Services.Mapping;
-using Epsilon.Web.ViewModels.Manufacturer;
 using Epsilon.Web.ViewModels.Part;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +43,43 @@ namespace Epsilon.Services.Data
             };
 
             await partRepository.AddAsync(part);
+            await partRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteByIdAsync(int partId)
+        {
+            var part = await partRepository
+                .All()
+               .Where(p => p.Id == partId)
+               .FirstOrDefaultAsync();
+
+            if (part == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            partRepository.Delete(part);
+            await partRepository.SaveChangesAsync();
+        }
+
+        public async Task EditByIdAsync(PartEditInputModel model, string creatorId)
+        {
+            var part = await partRepository
+                .All()
+                .Where(p => p.Id == model.Id)
+                .FirstOrDefaultAsync();
+
+            if (part == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            part.Type = model.Type;
+            part.Model = model.Model;
+            part.Description = model.Description;
+            part.ManufacturerId = model.ManufacturerId;
+
+            partRepository.Update(part);
             await partRepository.SaveChangesAsync();
         }
 

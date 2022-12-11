@@ -108,7 +108,7 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             catch (Exception)
             {
                 // TODO: extract success, error and other messages into constants
-                ModelState.AddModelError(string.Empty, "Something went wrong while editing");
+                ModelState.AddModelError(string.Empty, "Something went wrong while deleting");
 
                 return RedirectToAction(nameof(All));
             }
