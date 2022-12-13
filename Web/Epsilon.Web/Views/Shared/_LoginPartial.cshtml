@@ -18,7 +18,7 @@
             }
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-controller="ApplicationUser" asp-action="Logout" asp-route-id="@UserManager.GetUserId(User)">
+            <form class="form-inline" asp-area="" asp-controller="ApplicationUser" asp-action="Logout" asp-route-id="@UserManager.GetUserId(User)">
                 <button type="submit" class="nav-link btn btn-link">Logout</button>
             </form>
         </li>

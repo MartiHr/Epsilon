@@ -10,6 +10,8 @@ namespace Epsilon.Services.Data.Contracts
         // TODO: implement
         Task<List<T>> GetAllAsync<T>(int page, int itemsPerPage);
 
+        Task<List<T>> GetANumberOfAsync<T>(int count);
+
         Task<Computer> GetOneByIdAsync(int id);
 
         Task CreateAsync(ComputerCreateInputModel model, string creatorId, string imagePath);

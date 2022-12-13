@@ -157,6 +157,16 @@ namespace Epsilon.Services.Data
             return items;
         }
 
+        public async Task<List<T>> GetANumberOfAsync<T>(int count)
+        {
+            return await computerRepository
+                .AllAsNoTracking()
+                .OrderByDescending(c => c.CreatedOn)
+                .Take(count)
+                .To<T>()
+                .ToListAsync();
+        }
+
         public async Task<T> GetByIdAsync<T>(int id)
         {
             var computer = await computerRepository

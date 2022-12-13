@@ -1,9 +1,129 @@
-﻿@using Epsilon.Common
+﻿@model ComputersListViewModel
+
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="text-center">Take a look at our newest additions!</h1>
+
+@*
+<div id="carouselExampleControls" class="carousel carousel-dark slide col-md-6">
+    <div class="carousel-inner h-100 d-flex align-items-center">
+        @foreach (var computer in Model.Computers)
+        {
+            <div class="carousel-item @(computer == Model.Computers.FirstOrDefault() ? "active" : string.Empty)">
+                <img src="@computer.ImageUrl" class="d-block mb-5  w-100" data-bs-interval="false" alt="...">
+            </div>
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carou
+sel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon text-black" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>*@
+@*
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner" >
+        @foreach (var computer in Model.Computers)
+        {
+            <div class="d-flex align-items-center carousel-item @(computer == Model.Computers.FirstOrDefault() ? "active" : string.Empty)">
+                    <img src="@computer.ImageUrl" class="img-fluid d-block mb-5 mt-5 w-100" data-bs-interval="false" alt="...">
+            </div>
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>*@
+
+<!-- Carousel wrapper -->
+<div id="carouselBasicExample"
+     class="carousel slide carousel-fade"
+     data-mdb-ride="carousel">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        <button type="button"
+                data-mdb-target="#carouselBasicExample"
+                data-mdb-slide-to="0"
+                class="active"
+                aria-current="true"
+                aria-label="Slide 1"></button>
+        <button type="button"
+                data-mdb-target="#carouselBasicExample"
+                data-mdb-slide-to="1"
+                aria-label="Slide 2"></button>
+        <button type="button"
+                data-mdb-target="#carouselBasicExample"
+                data-mdb-slide-to="2"
+                aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Inner -->
+    <div class="carousel-inner">
+        <!-- Single item -->
+        <div class="carousel-item active">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(15).webp"
+                 class="d-block w-100"
+                 alt="Sunset Over the City" />
+            <div class="carousel-caption d-none d-md-block">
+                <h5>First slide label</h5>
+                <p>
+                    Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+            </div>
+        </div>
+
+        <!-- Single item -->
+        <div class="carousel-item">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(22).webp"
+                 class="d-block w-100"
+                 alt="Canyon at Nigh" />
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Second slide label</h5>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
+            </div>
+        </div>
+
+        <!-- Single item -->
+        <div class="carousel-item">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(23).webp"
+                 class="d-block w-100"
+                 alt="Cliff Above a Stormy Sea" />
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Third slide label</h5>
+                <p>
+                    Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Inner -->
+    <!-- Controls -->
+    <button class="carousel-control-prev"
+            type="button"
+            data-mdb-target="#carouselBasicExample"
+            data-mdb-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next"
+            type="button"
+            data-mdb-target="#carouselBasicExample"
+            data-mdb-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
+<!-- Carousel wrapper -->

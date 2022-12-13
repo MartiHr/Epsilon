@@ -1,21 +1,32 @@
 ﻿using System.Diagnostics;
-
+using System.Threading.Tasks;
+using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.ViewModels;
-
+using Epsilon.Web.ViewModels.Computer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Epsilon.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+
+        private readonly IComputerService computerService;
+
+        public HomeController(IComputerService _computerService)
         {
-            if (User.Identity.IsAuthenticated)
+            computerService = _computerService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            const int itemsCount = 4;
+
+            var model = new ComputersListViewModel()
             {
+                Computers = await computerService.GetANumberOfAsync<ComputerInListViewModel>(itemsCount),
+            };
 
-            }
-
-            return this.View();
+            return View(model);
         }
 
         public IActionResult Privacy()
