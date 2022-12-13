@@ -30,9 +30,9 @@ namespace Epsilon.Services.Data
                 .FirstOrDefaultAsync(i => i.Id == imageId);
         }
 
-        public Task<T> GetImagesByCreatorIdAsync<T>(string creatorId)
-        {
-            throw new System.NotImplementedException();
-        }
+        //public Task<T> GetImagesByCreatorIdAsync<T>(string creatorId)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
     }
 }

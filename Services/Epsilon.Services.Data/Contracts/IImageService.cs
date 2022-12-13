@@ -5,7 +5,7 @@ namespace Epsilon.Services.Data.Contracts
 {
     public interface IImageService
     {
-        Task<T> GetImagesByCreatorIdAsync<T>(string creatorId);
+        //Task<T> GetImagesByCreatorIdAsync<T>(string creatorId);
 
         Task<Image> GetByIdAsync(string imageId);
 
