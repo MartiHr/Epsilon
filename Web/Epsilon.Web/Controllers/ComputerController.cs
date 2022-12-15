@@ -50,7 +50,7 @@ namespace Epsilon.Web.Controllers
                 return NotFound();
             }
 
-            const int ItemsPerPage = 8;
+            const int ItemsPerPage = 4;
             var model = new ComputersListViewModel()
             {
                 PageNumber = id,
@@ -60,46 +60,6 @@ namespace Epsilon.Web.Controllers
             };
 
             return View(model);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            var model = new ComputerCreateInputModel();
-            await DecorateComputerCreateInputModel(model);
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(ComputerCreateInputModel inputModel)
-        {
-            // TODO: implement error handling (catch functionality)
-            if (!this.ModelState.IsValid)
-            {
-                await DecorateComputerCreateInputModel(inputModel);
-
-                return View(inputModel);
-            }
-
-            try
-            {
-                var creatorId = await editorService.GetEditorIdAsync(User.Id());
-
-                await computerService.CreateAsync(inputModel, creatorId, $"{hostEnvironment.WebRootPath}/images");
-
-                // return RedirectToAction(nameof(All));
-                return RedirectToAction("Index", "Home");
-            }
-            catch (Exception e)
-            {
-                TempData[GlobalConstants.ErrorMessage] = e.Message;
-                ModelState.AddModelError(string.Empty, e.Message);
-
-                await DecorateComputerCreateInputModel(inputModel);
-
-                return View(inputModel);
-            }
         }
 
         [AllowAnonymous]
@@ -116,73 +76,6 @@ namespace Epsilon.Web.Controllers
                 TempData[GlobalConstants.ErrorMessage] = e.Message;
                 return RedirectToAction(nameof(All));
             }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id)
-        {
-            try
-            {
-                var inputModel = await computerService.GetByIdAsync<ComputerEditInputModel>(id);
-
-                await DecorateComputerEditInputModel(inputModel);
-
-                return View(inputModel);
-            }
-            catch (Exception e)
-            {
-                TempData[GlobalConstants.ErrorMessage] = e.Message;
-                return RedirectToAction(nameof(All));
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(ComputerEditInputModel inputModel)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                await DecorateComputerEditInputModel(inputModel);
-
-                return View(inputModel);
-            }
-
-            try
-            {
-                var creatorId = await editorService.GetEditorIdAsync(User.Id());
-
-                await computerService.EditByIdAsync(inputModel, creatorId, $"{hostEnvironment.WebRootPath}/images");
-
-                return RedirectToAction(nameof(Details), new { id = inputModel.Id });
-            }
-            catch (Exception e)
-            {
-                TempData[GlobalConstants.ErrorMessage] = e.Message;
-                ModelState.AddModelError(string.Empty, e.Message);
-
-                await DecorateComputerEditInputModel(inputModel);
-
-                return View(inputModel);
-            }
-        }
-
-        private async Task DecorateComputerCreateInputModel(ComputerCreateInputModel model)
-        {
-            // TODO: extract logic elsewhere
-            model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
-            model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
-            model.GPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU");
-            model.CPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("CPU");
-            model.Storages = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("Storage");
-        }
-
-        private async Task DecorateComputerEditInputModel(ComputerEditInputModel model)
-        {
-            // TODO: extract logic elsewhere
-            model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
-            model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
-            model.GPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU");
-            model.CPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("CPU");
-            model.Storages = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("Storage");
         }
     }
 }

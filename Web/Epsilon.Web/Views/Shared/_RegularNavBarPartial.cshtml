@@ -17,6 +17,12 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                 </li>
+                @if (User.Identity.IsAuthenticated == true)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="All"><i class="fa-solid fa-cart-shopping"></i></a>
+                    </li>
+                }     
             </ul>
             <partial name="_LoginPartial" />
         </div>

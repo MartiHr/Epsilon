@@ -1,8 +1,6 @@
-﻿using System.Linq;
-
-using AutoMapper;
+﻿using AutoMapper;
 using Epsilon.Services.Mapping;
-
+using System.Linq;
 using ComputerModel = Epsilon.Data.Models.Computer;
 
 namespace Epsilon.Web.ViewModels.Computer

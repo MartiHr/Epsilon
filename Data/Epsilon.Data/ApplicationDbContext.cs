@@ -40,6 +40,8 @@ namespace Epsilon.Data
 
         public DbSet<Editor> Editors { get; set; }
 
+        public DbSet<Cart> Carts { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

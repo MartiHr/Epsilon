@@ -9,7 +9,7 @@
 
 @if (User.IsInRole(GlobalConstants.AdministratorRoleName) || User.IsInRole(GlobalConstants.ModeratorRoleName))
 {
-    <a asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-warning btn-lg">Edit <i class="fa-solid fa-pen-to-square"></i></a>
+    <a asp-area="Administration" asp-action="Edit" asp-route-id="@Model.Id" type="button" class="btn btn-warning btn-lg">Edit <i class="fa-solid fa-pen-to-square"></i></a>
     <button class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Delete <i class="fa-solid fa-trash"></i>
     </button>
@@ -146,7 +146,7 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                        <div class="text-center"><a asp-controller="Cart" asp-action="AddComputer" asp-route-id="@Model.Id" class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                     </div>
                 </div>
             </div>

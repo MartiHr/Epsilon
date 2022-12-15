@@ -19,5 +19,7 @@ namespace Epsilon.Data.Models
         public ApplicationUser ApplicationUser { get; set; }
 
         public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+
+        public Cart Cart { get; set; }
     }
 }

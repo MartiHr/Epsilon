@@ -19,7 +19,7 @@ namespace Epsilon.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            const int itemsCount = 4;
+            const int itemsCount = 3;
 
             var model = new ComputersListViewModel()
             {

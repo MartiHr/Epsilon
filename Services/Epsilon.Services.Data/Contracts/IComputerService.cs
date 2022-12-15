@@ -20,6 +20,8 @@ namespace Epsilon.Services.Data.Contracts
 
         Task<T> GetByIdAsync<T>(int id);
 
+        Task DeleteAsync(int id);
+
         int GetCount();
     }
 }

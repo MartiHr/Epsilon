@@ -83,6 +83,19 @@ namespace Epsilon.Services.Data
             }
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            var computer = await GetOneByIdAsync(id);
+
+            if (computer == null)
+            {
+                throw new ArgumentNullException("No such computer exists");
+            }
+
+            computerRepository.Delete(computer);
+            await computerRepository.SaveChangesAsync();
+        }
+
         public async Task EditByIdAsync(ComputerEditInputModel model, string creatorId, string imagePath)
         {
             var computer = await GetOneByIdAsync(model.Id);

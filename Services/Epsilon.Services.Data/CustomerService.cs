@@ -2,6 +2,8 @@
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Epsilon.Services.Data
@@ -24,6 +26,24 @@ namespace Epsilon.Services.Data
 
             await customerRepository.AddAsync(customer);
             await customerRepository.SaveChangesAsync();
+        }
+
+        public async Task<string> GetCustomerIdAsync(string userId)
+        {
+            return await customerRepository
+                .AllAsNoTracking()
+                .Where(c => c.ApplicationUserId == userId)
+                .Select(c => c.Id)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> HasCartAsync(string customerId)
+        {
+            var customer = await customerRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == customerId);
+
+            return customer.Cart != null;
         }
     }
 }
