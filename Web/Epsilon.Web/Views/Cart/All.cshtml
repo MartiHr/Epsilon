@@ -28,7 +28,7 @@
                                         <p class="text-muted">@computer.GPUModel, @computer.CPUModel, @computer.StorageModel</p>
                                     </div>
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                        <h5 class="mb-0">@computer.Price.ToString("f2")</h5>
+                                        <h5 class="mb-0">$@computer.Price.ToString("f2")</h5>
                                     </div>
                                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                         <a asp-area="" asp-action="Delete" asp-route-id="@computer.Id" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
@@ -38,9 +38,25 @@
                         </div>
                     }
 
-                    <div class="card mb-3">
+                    <form asp-controller="Order" asp-action="Create" method="post" class="mb-3 mt-md-4">
+                        <div class="card mb-3">
+                            <span class="card-title pt-3 ps-3"><b>Enter your address:</b></span>
+                            <div class="p-2">
+                                <label asp-for="@Model.Address" class="form-label"></label>
+                                <input asp-for="@Model.Address" class="form-control" aria-required="true" />
+                                <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <span class=" me-5"><b>Total Price: $@Model.TotalPrice</b></span>
+                                <input class="btn btn-primary btn-warning" type="submit" value="Complete order" />
+                            </div>
+                        </div>
+                    </form>
+
+               @*     <div class="card mb-3">
                         <span class="card-title pt-3 ps-3"><b>Enter your address:</b></span>
-                        @*<div class="card-title"></div>*@
                         <div class="p-2">
                             <input class="p-1 w-100" />
                         </div>
@@ -48,10 +64,10 @@
 
                     <div class="card">
                         <div class="card-body text-center">
-                            <span class=" me-5"><b>Total Price: @Model.TotalPrice</b></span>
-                            <button type="button" class="btn btn-warning btn-block btn-lg">Proceed with order</button>
+                            <span class=" me-5"><b>Total Price: $@Model.TotalPrice</b></span>
+                            <button type="button" class="btn btn-warning btn-block btn-lg">Complete order</button>
                         </div>
-                    </div>
+                    </div>*@
                 }
                 else
                 {

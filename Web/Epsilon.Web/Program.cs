@@ -82,6 +82,7 @@ namespace Epsilon.Web
             services.AddTransient<IPartService, PartService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ICartService, CartService>();
+            services.AddTransient<IOrderService, OrderService>();
         }
 
         private static void Configure(WebApplication app)

@@ -22,5 +22,6 @@ namespace Epsilon.Services.Data.Contracts
 
         Task RemoveComputerFromCartAsync(int computerId, string cartId);
 
+        Task EmptyAsync(string customerId);
     }
 }

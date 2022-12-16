@@ -47,5 +47,10 @@ namespace Epsilon.Data.Models
         public ICollection<Part> Parts { get; set; } = new HashSet<Part>();
 
         public ICollection<Image> Images { get; set; } = new HashSet<Image>();
+
+        public ICollection<Cart> Carts { get; set; } = new HashSet<Cart>();
+
+        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+
     }
 }

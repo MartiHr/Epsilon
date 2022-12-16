@@ -63,8 +63,7 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
                 await computerService.CreateAsync(inputModel, creatorId, $"{hostEnvironment.WebRootPath}/images");
 
-                // return RedirectToAction(nameof(All));
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("All", "Computer", new { Area = string.Empty });
             }
             catch (Exception e)
             {

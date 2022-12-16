@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Epsilon.Web.Infrastructure\Epsilon.Web.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Order\" />
+  </ItemGroup>
+
 </Project>

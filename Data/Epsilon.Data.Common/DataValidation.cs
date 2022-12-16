@@ -68,6 +68,12 @@
             public const int PartDescriptionMaxLength = 500;
         }
 
+        public static class Address
+        {
+            public const int AddressTypeMinLength = 5;
+            public const int AddressTypeMaxLength = 50;
+        }
+
         public static class Warranty
         {
         }

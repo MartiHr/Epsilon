@@ -4,6 +4,7 @@ using Epsilon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Epsilon.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221216143530_OrderEntityUpdate")]
+    partial class OrderEntityUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +23,6 @@ namespace Epsilon.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CartComputer", b =>
-                {
-                    b.Property<string>("CartsId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ComputersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartsId", "ComputersId");
-
-                    b.HasIndex("ComputersId");
-
-                    b.ToTable("CartComputer", (string)null);
-                });
-
-            modelBuilder.Entity("ComputerOrder", b =>
-                {
-                    b.Property<int>("ComputersId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OrdersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ComputersId", "OrdersId");
-
-                    b.HasIndex("OrdersId");
-
-                    b.ToTable("ComputerOrder", (string)null);
-                });
 
             modelBuilder.Entity("ComputerPart", b =>
                 {
@@ -64,7 +36,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("PartsId");
 
-                    b.ToTable("ComputerPart", (string)null);
+                    b.ToTable("ComputerPart");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.ApplicationRole", b =>
@@ -215,7 +187,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Category", b =>
@@ -247,7 +219,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Computer", b =>
@@ -257,6 +229,9 @@ namespace Epsilon.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CartId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -294,10 +269,15 @@ namespace Epsilon.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("CategoryId");
 
@@ -307,7 +287,9 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.ToTable("Computers", (string)null);
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Computers");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Customer", b =>
@@ -337,7 +319,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Editor", b =>
@@ -367,7 +349,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Editors", (string)null);
+                    b.ToTable("Editors");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Image", b =>
@@ -406,7 +388,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Manufacturer", b =>
@@ -443,7 +425,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Manufacturers", (string)null);
+                    b.ToTable("Manufacturers");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Order", b =>
@@ -477,7 +459,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Epsilon.Data.Models.Part", b =>
@@ -524,7 +506,7 @@ namespace Epsilon.Data.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.ToTable("Parts", (string)null);
+                    b.ToTable("Parts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -633,36 +615,6 @@ namespace Epsilon.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CartComputer", b =>
-                {
-                    b.HasOne("Epsilon.Data.Models.Cart", null)
-                        .WithMany()
-                        .HasForeignKey("CartsId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Epsilon.Data.Models.Computer", null)
-                        .WithMany()
-                        .HasForeignKey("ComputersId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ComputerOrder", b =>
-                {
-                    b.HasOne("Epsilon.Data.Models.Computer", null)
-                        .WithMany()
-                        .HasForeignKey("ComputersId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Epsilon.Data.Models.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ComputerPart", b =>
                 {
                     b.HasOne("Epsilon.Data.Models.Computer", null)
@@ -691,6 +643,10 @@ namespace Epsilon.Data.Migrations
 
             modelBuilder.Entity("Epsilon.Data.Models.Computer", b =>
                 {
+                    b.HasOne("Epsilon.Data.Models.Cart", null)
+                        .WithMany("Computers")
+                        .HasForeignKey("CartId");
+
                     b.HasOne("Epsilon.Data.Models.Category", "Category")
                         .WithMany("Computers")
                         .HasForeignKey("CategoryId")
@@ -708,6 +664,10 @@ namespace Epsilon.Data.Migrations
                         .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Epsilon.Data.Models.Order", null)
+                        .WithMany("Computers")
+                        .HasForeignKey("OrderId");
 
                     b.Navigation("Category");
 
@@ -839,6 +799,11 @@ namespace Epsilon.Data.Migrations
                     b.Navigation("Roles");
                 });
 
+            modelBuilder.Entity("Epsilon.Data.Models.Cart", b =>
+                {
+                    b.Navigation("Computers");
+                });
+
             modelBuilder.Entity("Epsilon.Data.Models.Category", b =>
                 {
                     b.Navigation("Computers");
@@ -868,6 +833,11 @@ namespace Epsilon.Data.Migrations
                     b.Navigation("Computers");
 
                     b.Navigation("Parts");
+                });
+
+            modelBuilder.Entity("Epsilon.Data.Models.Order", b =>
+                {
+                    b.Navigation("Computers");
                 });
 #pragma warning restore 612, 618
         }

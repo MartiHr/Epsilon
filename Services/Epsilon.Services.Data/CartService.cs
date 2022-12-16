@@ -13,7 +13,6 @@ namespace Epsilon.Services.Data
 {
     public class CartService : ICartService
     {
-
         private readonly IDeletableEntityRepository<Cart> cartRepository;
         private readonly IComputerService computerService;
 
@@ -31,6 +30,11 @@ namespace Epsilon.Services.Data
 
             var computer = await computerService.GetOneByIdAsync(computerId);
 
+            if (cart.Computers.Any(c => c.Id == computer.Id))
+            {
+                throw new ArgumentNullException("Computer already added");
+            }
+
             cart.Computers.Add(computer);
 
             cartRepository.Update(cart);
@@ -45,6 +49,19 @@ namespace Epsilon.Services.Data
             };
 
             await cartRepository.AddAsync(cart);
+            await cartRepository.SaveChangesAsync();
+        }
+
+        public async Task EmptyAsync(string customerId)
+        {
+            var cart = await cartRepository.All().FirstOrDefaultAsync(c => c.CustomerId == customerId);
+
+            foreach (var computer in cart.Computers)
+            {
+                cart.Computers.Remove(computer);
+            }
+
+            cartRepository.Update(cart);
             await cartRepository.SaveChangesAsync();
         }
 

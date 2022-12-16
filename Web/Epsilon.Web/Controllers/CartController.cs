@@ -1,4 +1,5 @@
-﻿using Epsilon.Data.Models;
+﻿using Epsilon.Common;
+using Epsilon.Data.Models;
 using Epsilon.Services.Data;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
@@ -6,6 +7,7 @@ using Epsilon.Web.ViewModels.Cart;
 using Epsilon.Web.ViewModels.Computer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Epsilon.Web.Controllers
@@ -39,18 +41,27 @@ namespace Epsilon.Web.Controllers
 
         public async Task<IActionResult> AddComputer(int id)
         {
-            var customerId = await customerService.GetCustomerIdAsync(User.Id());
-
-            if (await customerService.HasCartAsync(customerId) == false)
+            try
             {
-                await cartService.CreateCartAsync(customerId);
+                var customerId = await customerService.GetCustomerIdAsync(User.Id());
+
+                if (await customerService.HasCartAsync(customerId) == false)
+                {
+                    await cartService.CreateCartAsync(customerId);
+                }
+
+                var cart = await cartService.GetCartByCustomerIdAsync(customerId);
+
+                await cartService.AddComputerToCartAsync(id, cart.Id);
+
+                return RedirectToAction(nameof(All), new { customerId = customerId });
             }
+            catch (ArgumentNullException ae)
+            {
+                TempData[GlobalConstants.WarningMessage] = ae.Message;
 
-            var cart = await cartService.GetCartByCustomerIdAsync(customerId);
-
-            await cartService.AddComputerToCartAsync(id, cart.Id);
-
-            return RedirectToAction(nameof(All), new { customerId = customerId });
+                return RedirectToAction(nameof(All));
+            }
         }
 
         public async Task<IActionResult> Delete(int id)
