@@ -22,30 +22,46 @@ namespace Epsilon.Web.Controllers
             customerService = _customerService;
         }
 
-        public async Task<IActionResult> CartAll(string customerId)
+        public async Task<IActionResult> All(string customerId)
         {
+            if (customerId == null)
+            {
+                customerId = await customerService.GetCustomerIdAsync(User.Id());
+            }
+
             var model = new CartListViewModel()
             {
-                Computers = await cartService.GetAllComputersOfCustomerAsync<ComputerInListViewModel>(customerId),
+                Computers = await cartService.GetAllComputersOfCustomerCartAsync<ComputerInListViewModel>(customerId),
             };
 
             return View(model);
         }
 
-        public async Task<IActionResult> AddComputer(int computerId)
+        public async Task<IActionResult> AddComputer(int id)
         {
             var customerId = await customerService.GetCustomerIdAsync(User.Id());
 
-            if (await customerService.HasCartAsync(customerId))
+            if (await customerService.HasCartAsync(customerId) == false)
             {
                 await cartService.CreateCartAsync(customerId);
             }
 
             var cart = await cartService.GetCartByCustomerIdAsync(customerId);
 
-            await cartService.AddComputerToCartAsync(computerId, cart.Id);
+            await cartService.AddComputerToCartAsync(id, cart.Id);
 
-            return RedirectToAction(nameof(CartAll), new { customerId = customerId });
+            return RedirectToAction(nameof(All), new { customerId = customerId });
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var customerId = await customerService.GetCustomerIdAsync(User.Id());
+
+            var cart = await cartService.GetCartByCustomerIdAsync(customerId);
+
+            await cartService.RemoveComputerFromCartAsync(id, cart.Id);
+
+            return RedirectToAction(nameof(All), new { customerId = customerId });
         }
     }
 }

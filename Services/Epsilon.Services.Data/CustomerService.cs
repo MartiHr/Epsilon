@@ -41,7 +41,9 @@ namespace Epsilon.Services.Data
         {
             var customer = await customerRepository
                 .AllAsNoTracking()
-                .FirstOrDefaultAsync(c => c.Id == customerId);
+                .Where(c => c.Id == customerId)
+                .Include(c => c.Cart)
+                .FirstOrDefaultAsync();
 
             return customer.Cart != null;
         }

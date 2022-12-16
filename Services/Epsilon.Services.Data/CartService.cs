@@ -1,13 +1,13 @@
-﻿using Epsilon.Data.Common.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using Epsilon.Data.Common.Repositories;
 using Epsilon.Data.Models;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epsilon.Services.Data
 {
@@ -55,11 +55,20 @@ namespace Epsilon.Services.Data
             return cart.Computers.ToList();
         }
 
-        public async Task<List<T>> GetAllComputersOfCustomerAsync<T>(string customerId)
+        public async Task<List<T>> GetAllComputersOfCustomerCartAsync<T>(string customerId)
         {
+            var computers = await cartRepository
+                .AllAsNoTracking()
+                .Where(c => c.CustomerId == customerId)
+                .Include(c => c.Computers)
+                .SelectMany(c => c.Computers)
+                .ToListAsync();
+
             var items = await cartRepository
                 .AllAsNoTracking()
                 .Where(c => c.CustomerId == customerId)
+                .Include(c => c.Computers)
+                .SelectMany(c => c.Computers)
                 .To<T>()
                 .ToListAsync();
 
@@ -71,6 +80,20 @@ namespace Epsilon.Services.Data
             return await cartRepository
                 .AllAsNoTracking()
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
+        }
+
+        public async Task RemoveComputerFromCartAsync(int computerId, string cartId)
+        {
+            var cart = await cartRepository
+                .All()
+                .FirstOrDefaultAsync(c => c.Id == cartId);
+
+            var computer = await computerService.GetOneByIdAsync(computerId);
+
+            cart.Computers.Remove(computer);
+
+            cartRepository.Update(cart);
+            await cartRepository.SaveChangesAsync();
         }
     }
 }

@@ -18,6 +18,9 @@ namespace Epsilon.Services.Data.Contracts
 
         Task AddComputerToCartAsync(int computerId, string cartId);
 
-        Task<List<T>> GetAllComputersOfCustomerAsync<T>(string customerId);
+        Task<List<T>> GetAllComputersOfCustomerCartAsync<T>(string customerId);
+
+        Task RemoveComputerFromCartAsync(int computerId, string cartId);
+
     }
 }
