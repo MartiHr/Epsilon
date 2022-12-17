@@ -8,7 +8,6 @@ namespace Epsilon.Data.Models
 {
     public class Order : BaseDeletableModel<string>
     {
-        // TODO: add properties, add order status entity/enum
         public Order()
         {
             Id = Guid.NewGuid().ToString();

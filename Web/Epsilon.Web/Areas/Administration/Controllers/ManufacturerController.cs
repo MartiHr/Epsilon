@@ -1,4 +1,5 @@
-﻿using Epsilon.Services.Data.Contracts;
+﻿using Epsilon.Common;
+using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.Category;
 using Epsilon.Web.ViewModels.Manufacturer;
@@ -19,7 +20,6 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
         public async Task<IActionResult> All()
         {
-            // TODO: implement pagination
             var model = new ManufacturerListViewModel()
             {
                 Manufacturers = await manufacturerService.GetAllWithDeletedAsync<ManufacturerInListViewModel>(),
@@ -48,6 +48,8 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             {
                 await manufacturerService.CreateAsync(inputModel, User.Id());
 
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyAddedMessage;
+
                 return RedirectToAction(nameof(All));
             }
             catch (Exception e)
@@ -69,6 +71,8 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             }
             catch (Exception e)
             {
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
+
                 return RedirectToAction(nameof(All));
             }
         }
@@ -85,11 +89,13 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             {
                 await manufacturerService.EditByIdAsync(inputModel, User.Id());
 
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyChangedMessage;
+
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-                // TODO: extract success, error and other messages into constants
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
                 ModelState.AddModelError(string.Empty, "Something went wrong while editing");
 
                 return View(inputModel);
@@ -103,11 +109,13 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             {
                 await manufacturerService.DeleteByIdAsync(id);
 
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyRemovedMessage;
+
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-                // TODO: extract success, error and other messages into constants
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
                 ModelState.AddModelError(string.Empty, "Something went wrong while deleting");
 
                 return RedirectToAction(nameof(All));

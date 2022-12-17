@@ -6,8 +6,6 @@ namespace Epsilon.Web.ViewModels.ApplicationUser
 {
     public class RegisterViewModel
     {
-        // TODO: Finish implementing the viewModel: add properties and other things if needed
-
         [Required]
         [StringLength(ApplicationUserUsernameMaxLength, MinimumLength = ApplicationUserUsernameMinLength)]
         public string UserName { get; set; } = null!;

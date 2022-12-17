@@ -50,7 +50,6 @@ namespace Epsilon.Services.Data
 
         public async Task EditByIdAsync(CategoryEditInputModel inputModel, string creatorId)
         {
-            // TODO: possibly add creator to category
             var dbCategory = await categoriesRepository
                 .All()
                 .Where(c => c.Id == inputModel.Id)

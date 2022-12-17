@@ -1,4 +1,5 @@
-﻿using Epsilon.Services.Data;
+﻿using Epsilon.Common;
+using Epsilon.Services.Data;
 using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.Category;
@@ -24,23 +25,40 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
         public async Task<IActionResult> All()
         {
-            // TODO: implement pagination
-            var model = new PartListViewModel()
+            try
             {
-                Parts = await partService.GetAllWithDeletedAsync<PartInListViewModel>(),
-            };
+                var model = new PartListViewModel()
+                {
+                    Parts = await partService.GetAllWithDeletedAsync<PartInListViewModel>(),
+                };
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
+
+                return RedirectToAction("All", "Computer");
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var inputModel = new PartCreateInputModel();
+            try
+            {
+                var inputModel = new PartCreateInputModel();
 
-            inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
+                inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
 
-            return View(inputModel);
+                return View(inputModel);
+            }
+            catch (Exception)
+            {
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
+
+                return RedirectToAction("All", "Computer");
+            }
         }
 
         [HttpPost]
@@ -56,6 +74,8 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             try
             {
                 await partService.CreateAsync(inputModel, User.Id());
+
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyAddedMessage;
 
                 return RedirectToAction(nameof(All));
             }
@@ -77,10 +97,13 @@ namespace Epsilon.Web.Areas.Administration.Controllers
                 var inputModel = await partService.GetOneByIdAsync<PartEditInputModel>(id);
                 inputModel.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
 
+
                 return View(inputModel);
             }
             catch (Exception e)
             {
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
+
                 return RedirectToAction(nameof(All));
             }
         }
@@ -97,11 +120,13 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             {
                 await partService.EditByIdAsync(inputModel, User.Id());
 
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyChangedMessage;
+
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-                // TODO: extract success, error and other messages into constants
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
                 ModelState.AddModelError(string.Empty, "Something went wrong while editing");
 
                 return View(inputModel);
@@ -115,12 +140,14 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             {
                 await partService.DeleteByIdAsync(id);
 
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyRemovedMessage;
+
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-                // TODO: extract success, error and other messages into constants
                 ModelState.AddModelError(string.Empty, "Something went wrong while deleting");
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
 
                 return RedirectToAction(nameof(All));
             }

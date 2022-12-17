@@ -20,6 +20,14 @@
 
         public const string PNGExtension = ".png";
 
+        public const string SuccessfullyAddedMessage = "Successfully added";
+
+        public const string SuccessfullyChangedMessage = "Successfully changed";
+
+        public const string SuccessfullyRemovedMessage = "Successfully deleted";
+
+        public const string UnexpectedError = "Unexpected error occured";
+
         public static readonly string[] AllowedImageExtensions = { ".jpg", ".jpeg", ".png" };
     }
 }

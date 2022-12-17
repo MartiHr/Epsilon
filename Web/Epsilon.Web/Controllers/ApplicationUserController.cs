@@ -65,7 +65,6 @@ namespace Epsilon.Web.Controllers
             {
                 await customerService.CreateAsync(user.Id);
 
-                // TODO: move creation of editor to the correct place
                 TempData[GlobalConstants.SuccessMessage] = "Successfully registered!";
 
                 return RedirectToAction(nameof(Login));

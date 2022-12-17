@@ -15,7 +15,6 @@ namespace Epsilon.Web.ViewModels.Computer
 {
     public class ComputerCreateInputModel
     {
-        // TODO: add attributes and finish
         [StringLength(ComputerNameMaxLength, MinimumLength = ComputerNameMinLength)]
         public string Name { get; set; }
 

@@ -4,7 +4,6 @@ namespace Epsilon.Web.ViewModels.ApplicationUser
 {
     public class LoginViewModel
     {
-        // TODO: Finish implementing the viewModel: add properties and other things if needed (for example - email)
         [Required]
         public string UserName { get; set; } = null!;
 

@@ -8,7 +8,6 @@ namespace Epsilon.Data.Models
 {
     public class Part : BaseDeletableModel<int>
     {
-        // TODO: Add Type entity/enum
         [Required]
         [MaxLength(PartTypeMaxLength)]
         public string Type { get; set; }

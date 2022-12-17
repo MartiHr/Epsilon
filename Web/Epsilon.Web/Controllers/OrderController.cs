@@ -50,20 +50,29 @@ namespace Epsilon.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CartListViewModel model)
         {
-            var customerId = await customerService.GetCustomerIdAsync(User.Id());
-
-            var orderId = await orderService.CreateAsync(customerId, model.Address);
-
-            var computers = await cartService.GetAllComputersOfCustomerCartAsync<ComputerInListViewModel>(customerId);
-
-            foreach (var computer in computers)
+            try
             {
-                await orderService.AddComputerToOrderAsync(orderId, computer.Id);
+                var customerId = await customerService.GetCustomerIdAsync(User.Id());
+
+                var orderId = await orderService.CreateAsync(customerId, model.Address);
+
+                var computers = await cartService.GetAllComputersOfCustomerCartAsync<ComputerInListViewModel>(customerId);
+
+                foreach (var computer in computers)
+                {
+                    await orderService.AddComputerToOrderAsync(orderId, computer.Id);
+                    TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyAddedMessage;
+                }
+
+                await cartService.EmptyAsync(customerId);
+
+                return RedirectToAction(nameof(All));
             }
-
-            await cartService.EmptyAsync(customerId);
-
-            return RedirectToAction(nameof(All));
+            catch (Exception)
+            {
+                TempData[GlobalConstants.ErrorMessage] = GlobalConstants.UnexpectedError;
+                return RedirectToAction(nameof(All));
+            }
         }
     }
 }

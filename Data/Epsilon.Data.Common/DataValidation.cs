@@ -2,7 +2,6 @@
 {
     public static class DataValidation
     {
-        // TODO: add remaining data validation constants
         public static class ApplicationUser
         {
             public const int ApplicationUserUsernameMinLength = 5;

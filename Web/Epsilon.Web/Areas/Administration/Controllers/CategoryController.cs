@@ -19,7 +19,6 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
         public async Task<IActionResult> All()
         {
-            // TODO: implement pagination
             var model = new CategoryListViewModel()
             {
                 Categories = await categoriesService.GetAllWithDeletedAsync<CategoryInListViewModel>(),
@@ -47,6 +46,8 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             try
             {
                 await categoriesService.CreateAsync(inputModel, User.Id());
+
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyAddedMessage;
 
                 return RedirectToAction(nameof(All));
             }
@@ -85,11 +86,13 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             {
                 await categoriesService.EditByIdAsync(inputModel, User.Id());
 
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyChangedMessage;
+
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-                // TODO: extract success, error and other messages into constants
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
                 ModelState.AddModelError(string.Empty, "Something went wrong while editing");
 
                 return View(inputModel);
@@ -103,11 +106,13 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             {
                 await categoriesService.DeleteByIdAsync(id);
 
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyRemovedMessage;
+
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-                // TODO: extract success, error and other messages into constants
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
                 ModelState.AddModelError(string.Empty, "Something went wrong while deleting");
 
                 return RedirectToAction(nameof(All));

@@ -49,7 +49,6 @@ namespace Epsilon.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ComputerCreateInputModel inputModel)
         {
-            // TODO: implement error handling (catch functionality)
             if (!this.ModelState.IsValid)
             {
                 await DecorateComputerCreateInputModel(inputModel);
@@ -62,6 +61,8 @@ namespace Epsilon.Web.Areas.Administration.Controllers
                 var creatorId = await editorService.GetEditorIdAsync(User.Id());
 
                 await computerService.CreateAsync(inputModel, creatorId, $"{hostEnvironment.WebRootPath}/images");
+
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyAddedMessage;
 
                 return RedirectToAction("All", "Computer", new { Area = string.Empty });
             }
@@ -110,6 +111,8 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
                 await computerService.EditByIdAsync(inputModel, creatorId, $"{hostEnvironment.WebRootPath}/images");
 
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyChangedMessage;
+
                 return RedirectToAction("Details", "Computer", new { id = inputModel.Id, Area = string.Empty });
             }
             catch (Exception e)
@@ -129,7 +132,7 @@ namespace Epsilon.Web.Areas.Administration.Controllers
             {
                 await computerService.DeleteAsync(id);
 
-                TempData[GlobalConstants.SuccessMessage] = "Successfully deleted";
+                TempData[GlobalConstants.SuccessMessage] = GlobalConstants.SuccessfullyRemovedMessage;
 
                 return RedirectToAction("All", "Computer", new { Area = string.Empty });
             }
@@ -142,7 +145,6 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
         private async Task DecorateComputerCreateInputModel(ComputerCreateInputModel model)
         {
-            // TODO: extract logic elsewhere
             model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
             model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
             model.GPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU");
@@ -152,7 +154,6 @@ namespace Epsilon.Web.Areas.Administration.Controllers
 
         private async Task DecorateComputerEditInputModel(ComputerEditInputModel model)
         {
-            // TODO: extract logic elsewhere
             model.Categories = await categoriesService.GetAllAsync<CategoryDropdownViewModel>();
             model.Manufacturers = await manufacturerService.GetAllAsync<ManufacturerDropdownViewModel>();
             model.GPUs = await partService.GetAllOfTypeAsync<PartDropdownViewModel>("GPU");

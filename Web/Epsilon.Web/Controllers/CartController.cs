@@ -26,17 +26,26 @@ namespace Epsilon.Web.Controllers
 
         public async Task<IActionResult> All(string customerId)
         {
-            if (customerId == null)
+            try
             {
-                customerId = await customerService.GetCustomerIdAsync(User.Id());
+                if (customerId == null)
+                {
+                    customerId = await customerService.GetCustomerIdAsync(User.Id());
+                }
+
+                var model = new CartListViewModel()
+                {
+                    Computers = await cartService.GetAllComputersOfCustomerCartAsync<ComputerInListViewModel>(customerId),
+                };
+
+                return View(model);
             }
-
-            var model = new CartListViewModel()
+            catch (Exception)
             {
-                Computers = await cartService.GetAllComputersOfCustomerCartAsync<ComputerInListViewModel>(customerId),
-            };
+                TempData[GlobalConstants.WarningMessage] = GlobalConstants.UnexpectedError;
 
-            return View(model);
+                return RedirectToAction("All", "Computer");
+            }
         }
 
         public async Task<IActionResult> AddComputer(int id)

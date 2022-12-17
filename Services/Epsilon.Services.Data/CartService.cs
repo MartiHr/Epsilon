@@ -35,11 +35,13 @@ namespace Epsilon.Services.Data
             {
                 throw new ArgumentNullException("Computer already added");
             }
+            else
+            {
+                cart.Computers.Add(computer);
 
-            cart.Computers.Add(computer);
-
-            cartRepository.Update(cart);
-            await cartRepository.SaveChangesAsync();
+                cartRepository.Update(cart);
+                await cartRepository.SaveChangesAsync();
+            }
         }
 
         public async Task CreateCartAsync(string customerId)
