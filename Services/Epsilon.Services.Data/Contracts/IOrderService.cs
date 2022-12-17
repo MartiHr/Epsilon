@@ -1,10 +1,5 @@
-﻿using Epsilon.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using static Epsilon.Data.Common.DataValidation;
 
 namespace Epsilon.Services.Data.Contracts
 {
@@ -13,5 +8,9 @@ namespace Epsilon.Services.Data.Contracts
         Task<string> CreateAsync(string customerId, string address);
 
         Task AddComputerToOrderAsync(string orderId, int computerId);
+
+        Task<List<T>> GetAllAsync<T>(string customerId);
+
+        Task<List<T>> GetAllComputersOfOrderAsync<T>(string customerId, string orderId);
     }
 }

@@ -14,6 +14,7 @@ namespace Epsilon.Services.Data.Tests
         private ApplicationDbContext applicationDbContext;
         private IDeletableEntityRepository<Customer> customerRepository;
         private IDeletableEntityRepository<ApplicationUser> applicationUserRepository;
+        private IDeletableEntityRepository<Cart> cartRepository;
         private CustomerService customerService;
 
         public CustomerServiceTests()
@@ -29,6 +30,7 @@ namespace Epsilon.Services.Data.Tests
 
             customerRepository = new EfDeletableEntityRepository<Customer>(applicationDbContext);
             applicationUserRepository = new EfDeletableEntityRepository<ApplicationUser>(applicationDbContext);
+            cartRepository = new EfDeletableEntityRepository<Cart>(applicationDbContext);
             customerService = new CustomerService(customerRepository);
         }
 
@@ -47,6 +49,56 @@ namespace Epsilon.Services.Data.Tests
             Assert.NotEmpty(customerRepository.All());
             Assert.NotNull(dbModel);
             Assert.Equal(user.Id, dbModel.ApplicationUser.Id);
+        }
+
+        [Fact]
+        public async Task GetCustomerIdAsyncWorksProperly()
+        {
+            var user = new ApplicationUser();
+
+            await applicationUserRepository.AddAsync(user);
+            await applicationUserRepository.SaveChangesAsync();
+
+            var customer = new Customer()
+            {
+                ApplicationUserId = user.Id,
+            };
+
+            await customerRepository.AddAsync(customer);
+            await customerRepository.SaveChangesAsync();
+
+            var resultId = await customerService.GetCustomerIdAsync(user.Id);
+
+            Assert.Equal(customer.Id, resultId);
+        }
+
+        [Fact]
+        public async Task HasCartAsyncWorksProperly()
+        {
+            var user = new ApplicationUser();
+
+            await applicationUserRepository.AddAsync(user);
+            await applicationUserRepository.SaveChangesAsync();
+
+            var customer = new Customer()
+            {
+                ApplicationUserId = user.Id,
+            };
+
+            await customerRepository.AddAsync(customer);
+            await customerRepository.SaveChangesAsync();
+
+            var cart = new Cart()
+            {
+                CustomerId = customer.Id,
+            };
+
+            await cartRepository.AddAsync(cart);
+            await cartRepository.SaveChangesAsync();
+
+            var result = await customerService.HasCartAsync(customer.Id);
+
+            Assert.True(result);
         }
     }
 }

@@ -26,7 +26,8 @@ namespace Epsilon.Services.Data
         {
             var cart = await cartRepository
                 .All()
-                .FirstOrDefaultAsync(c => c.Id == cartId);
+                .Where(c => c.Id == cartId)
+                .FirstOrDefaultAsync();
 
             var computer = await computerService.GetOneByIdAsync(computerId);
 
@@ -54,7 +55,11 @@ namespace Epsilon.Services.Data
 
         public async Task EmptyAsync(string customerId)
         {
-            var cart = await cartRepository.All().FirstOrDefaultAsync(c => c.CustomerId == customerId);
+            var cart = await cartRepository
+                .All()
+                .Where(c => c.CustomerId == customerId)
+                .Include(c => c.Computers)
+                .FirstOrDefaultAsync();
 
             foreach (var computer in cart.Computers)
             {
@@ -74,13 +79,6 @@ namespace Epsilon.Services.Data
 
         public async Task<List<T>> GetAllComputersOfCustomerCartAsync<T>(string customerId)
         {
-            var computers = await cartRepository
-                .AllAsNoTracking()
-                .Where(c => c.CustomerId == customerId)
-                .Include(c => c.Computers)
-                .SelectMany(c => c.Computers)
-                .ToListAsync();
-
             var items = await cartRepository
                 .AllAsNoTracking()
                 .Where(c => c.CustomerId == customerId)
@@ -96,6 +94,7 @@ namespace Epsilon.Services.Data
         {
             return await cartRepository
                 .AllAsNoTracking()
+                .Include(c => c.Computers)
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
         }
 
@@ -103,13 +102,12 @@ namespace Epsilon.Services.Data
         {
             var cart = await cartRepository
                 .All()
+                .Include(c => c.Computers)
                 .FirstOrDefaultAsync(c => c.Id == cartId);
 
             var computer = await computerService.GetOneByIdAsync(computerId);
 
             cart.Computers.Remove(computer);
-
-            cartRepository.Update(cart);
             await cartRepository.SaveChangesAsync();
         }
     }

@@ -4,6 +4,7 @@ using Epsilon.Services.Data.Contracts;
 using Epsilon.Web.Infrastructure.Extensions;
 using Epsilon.Web.ViewModels.Cart;
 using Epsilon.Web.ViewModels.Computer;
+using Epsilon.Web.ViewModels.Order;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,9 +32,19 @@ namespace Epsilon.Web.Controllers
         {
             var customerId = await customerService.GetCustomerIdAsync(User.Id());
 
-            var 
+            var orders = await orderService.GetAllAsync<OrderInListViewModel>(customerId);
 
-            return null;
+            foreach (var order in orders)
+            {
+                order.Computers = await orderService.GetAllComputersOfOrderAsync<ComputerInListViewModel>(customerId, order.Id);
+            }
+
+            var model = new OrderListViewModel()
+            {
+                Orders = orders,
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -52,7 +63,7 @@ namespace Epsilon.Web.Controllers
 
             await cartService.EmptyAsync(customerId);
 
-            return RedirectToAction("All", "Cart");
+            return RedirectToAction(nameof(All));
         }
     }
 }
